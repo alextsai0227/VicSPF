@@ -1,5 +1,6 @@
 const http = require('http');
 const mongoose = require('mongoose');
+const Verifier = require("./Model/verifier");
 
 mongoose
   .connect(
@@ -18,7 +19,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   // we're connected!
   console.log("were connected");
-
+  const verifier = new Verifier.model({ email: "kk@gmail.com", phone:"123456677"})
+  verifier.save().then( v => {
+    console.log(v);
+  })
 });
 
 const hostname = '127.0.0.1';
