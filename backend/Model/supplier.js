@@ -9,7 +9,7 @@ const supplierSchema = new mongoose.Schema({
     abn: {type: String, required:true},
     company_name: {type: String, required:true},
     password: {type: String, required:true},
-    application_id: {type: [mongoose.Types.ObjectId], required:true}
+    application_id: {type: mongoose.Schema.Types.ObjectId, ref:'Application', required: true}
 });
 
 module.exports = {

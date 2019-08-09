@@ -9,7 +9,7 @@ const verifierSchema = new mongoose.Schema({
     abn: {type: String, required:true},
     company_name: {type: String, required:true},
     password: {type: String, required:true},
-    role_id: {type: [mongoose.Types.ObjectId], required:true}
+    role_id: {type: mongoose.Types.ObjectId, required:true}
 });
 
 module.exports = {
