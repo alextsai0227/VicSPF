@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 function MadeWithLove() {
   return (
@@ -56,6 +57,8 @@ export default function SignUp() {
   const [values, setValues] = React.useState({
     role:'',
     state: '',
+    email:'',
+    password:''
   });
   
   const roles = [
@@ -106,7 +109,21 @@ export default function SignUp() {
   const handleChange = name => event => {
     setValues({ ...values, [name]: event.target.value });
   };
+  
+  const handleSubmit = event => {
+    event.preventDefault();
 
+    const user = {
+      email: values.email,
+      password: values.password
+    };
+    console.log(user)
+    axios.post(`http://localhost:8000/api/users`, { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -118,14 +135,14 @@ export default function SignUp() {
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
           <Grid item xs={12}>
               <TextField
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
+                id="company_name"
                 label="Company Name"
                 name="companyName"
               />
@@ -145,6 +162,8 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={handleChange('email')}
+                value={values.email}
                 id="email"
                 name="email"
                 label="Email Address"
@@ -222,6 +241,8 @@ export default function SignUp() {
                 variant="outlined"
                 required
                 fullWidth
+                onChange={handleChange('password')}
+                value={values.password}
                 name="password"
                 label="Password"
                 id="password"
@@ -255,9 +276,6 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <MadeWithLove />
-      </Box>
     </Container>
   );
 }
