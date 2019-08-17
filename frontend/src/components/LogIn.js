@@ -4,20 +4,12 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import UseInputHook from './UseInputHook';
-
-const roles = [
-    { value: 'supplier', label: 'Supplier'},
-    { value: 'verifier', label: 'Verifier'}
-  ];
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -44,17 +36,15 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export default function SignUp() {
+export default function LogIn() {
     const classes = useStyles();  
     const [email, updateEmail, resetEmail] = UseInputHook('');
-    const [role, updateRole, resetRole] = UseInputHook('');
     const [password, updatePassword, resetPassword] = UseInputHook('');
       
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        alert(`email: ${email} role: ${role} password: ${password}`);
+        alert(`email: ${email}  password: ${password}`);
         resetEmail();
-        resetRole();
         resetPassword();
     }
 
@@ -68,14 +58,13 @@ export default function SignUp() {
                 </Avatar>
 
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Log In
                 </Typography>
 
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                         <TextField
-                            required
                             fullWidth
                             variant="outlined"
                             type="text"
@@ -88,27 +77,6 @@ export default function SignUp() {
                         </Grid> 
                         <Grid item xs={12}>
                         <TextField
-                            required
-                            fullWidth
-                            type="text"
-                            variant="outlined"
-                            select
-                            id="role"
-                            label="Role"
-                            name="role"
-                            value={role}
-                            onChange={updateRole}
-                            >
-                            {roles.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                            </MenuItem>
-                            ))}
-                        </TextField>
-                        </Grid>
-                        <Grid item xs={12}>
-                        <TextField
-                            required
                             fullWidth
                             variant="outlined"
                             type="password"
@@ -119,12 +87,6 @@ export default function SignUp() {
                             onChange={updatePassword}
                         />
                         </Grid>        
-                        <Grid item xs={12}>
-                        <FormControlLabel
-                            control={<Checkbox value="agreePolicy" color="primary" />}
-                            label="By signing up, you agree to SPF's Term of Use and Privacy Policy."
-                        />
-                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -133,12 +95,12 @@ export default function SignUp() {
                         color="primary"
                         value="submit"
                         className={classes.submit}
-                    >Sign Up
+                    >Log In
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                        <Link to="/LogIn" variant="body2">
-                            Already have an account? Log In
+                        <Link to='/signup' variant="body2">
+                            Don't have an account? Sign up
                         </Link>
                         </Grid>
                     </Grid>
@@ -147,8 +109,3 @@ export default function SignUp() {
         </Container>
     );
 }
-
-
-  
-
-  
