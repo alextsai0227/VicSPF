@@ -8,17 +8,7 @@ const useStyles = makeStyles(theme => ({
         // display: 'flex',
         // alignItems: 'center',
         // justifyContent: 'center',
-    },
-    // table: {
-    //   justifyContent: 'center'
-    // },
-    // buttons: {
-    //   marginBottom: theme.spacing(1)
-    // },
-    // instructions: {
-    //   marginTop: theme.spacing(1),
-    //   marginBottom: theme.spacing(1)
-    // },
+    }
 }));
 
 export default function FormAboEmp() {
