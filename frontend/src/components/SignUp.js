@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+// Material UI
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,46 +11,78 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
+// React related package
+import React from 'react';
+import { Link } from 'react-router-dom';
 import UseInputHook from './UseInputHook';
+import axios from 'axios';
 
-const roles = [
-    { value: 'supplier', label: 'Supplier'},
-    { value: 'verifier', label: 'Verifier'}
-  ];
-
+// Material UI
 const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
+    '@global': {
+      body: {
+        backgroundColor: theme.palette.common.white,
+      },
     },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(3),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  }));
 
-export default function SignUp() {
+
+
+
+export default function SignUp(props) {
     const classes = useStyles();  
     const [email, updateEmail, resetEmail] = UseInputHook('');
     const [role, updateRole, resetRole] = UseInputHook('');
     const [password, updatePassword, resetPassword] = UseInputHook('');
-      
+    const roles = [
+        { value: 'supplier', label: 'Supplier'},
+        { value: 'verifier', label: 'Verifier'}
+    ];
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
+        const user = {
+            email: email,
+            password: password
+        };
+        console.log(props)
+        if (role === 'supplier'){
+            // save supplier
+            axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
+                console.log(res);
+                // props.history.replace("/form")
+            }).catch(err =>{
+                console.log(err)
+            })
+        }else{
+            console.log("in verifier")
+            // save verifier
+            axios.post(`http://localhost:8000/api/verifier`, { user }).then(res => {
+                console.log(res);
+            }).catch(err =>{
+                console.log(err)
+            })
+        }
+
+        
         alert(`email: ${email} role: ${role} password: ${password}`);
         resetEmail();
         resetRole();
@@ -137,7 +168,7 @@ export default function SignUp() {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                        <Link to="/LogIn" variant="body2">
+                        <Link to="/login" variant="body2">
                             Already have an account? Log In
                         </Link>
                         </Grid>
