@@ -6,6 +6,8 @@ const saltRounds = 10;
 
 const verifierSchema = new mongoose.Schema({
 	email: {type: String, required:true, unique:true},
+	hash: String,
+  	salt: String,
 	phone: String,
 	street: String,
 	suburb: String,

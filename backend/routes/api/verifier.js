@@ -27,7 +27,6 @@ router.post('/', auth.optional, (req, res, next) => {
   const finalUser = new Verifier.model(user);
 
   finalUser.setPassword(user.password);
-
   return finalUser.save()
     .then(() => res.json({ user: finalUser.toAuthJSON() }))
     .catch((err) => {
@@ -56,8 +55,9 @@ router.post('/login', auth.optional, (req, res, next) => {
     });
   }
 
-  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+  return passport.authenticate('local_verifier', { session: false }, (err, passportUser, info) => {
     if(err) {
+      console.log(err)
       return next(err);
     }
 
@@ -68,7 +68,11 @@ router.post('/login', auth.optional, (req, res, next) => {
       return res.json({ user: user.toAuthJSON() });
     }
 
-    return res.status(400).info;
+    return res.status(400).json({
+      errors: {
+        message: "couldn't find user"
+      }
+    });
   })(req, res, next);
 });
 

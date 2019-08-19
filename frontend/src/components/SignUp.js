@@ -9,46 +9,22 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import {signUpStyles} from './Style'
 
 // React related package
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UseInputHook from './UseInputHook';
 import axios from 'axios';
-
 // Material UI
-const useStyles = makeStyles(theme => ({
-    '@global': {
-      body: {
-        backgroundColor: theme.palette.common.white,
-      },
-    },
-    paper: {
-      marginTop: theme.spacing(8),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    avatar: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(3),
-    },
-    submit: {
-      margin: theme.spacing(3, 0, 2),
-    },
-  }));
+
 
 
 
 
 export default function SignUp(props) {
-    const classes = useStyles();  
+    const classes = signUpStyles();  
     const [email, updateEmail, resetEmail] = UseInputHook('');
     const [role, updateRole, resetRole] = UseInputHook('');
     const [password, updatePassword, resetPassword] = UseInputHook('');
@@ -57,36 +33,45 @@ export default function SignUp(props) {
         { value: 'verifier', label: 'Verifier'}
     ];
 
+    const resetField = () => {
+        resetEmail();
+        resetRole();
+        resetPassword();
+    }
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         const user = {
             email: email,
             password: password
         };
-        console.log(props)
+        // For_Test
+        alert(`email: ${email} role: ${role} password: ${password}`);
+
         if (role === 'supplier'){
             // save supplier
             axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
                 console.log(res);
-                // props.history.replace("/form")
+                resetField()
+                // Todo: should navigate to supplier's page
+                props.history.push("/form")
             }).catch(err =>{
+                // Todo: Signup faild: should give advice to user
                 console.log(err)
             })
         }else{
             console.log("in verifier")
             // save verifier
             axios.post(`http://localhost:8000/api/verifier`, { user }).then(res => {
+                resetField()
+                // Todo: should navigate to verifier's page
+                props.history.push("/form")
                 console.log(res);
             }).catch(err =>{
+                // Todo: Signup faild: should give advice to user
                 console.log(err)
             })
         }
-
-        
-        alert(`email: ${email} role: ${role} password: ${password}`);
-        resetEmail();
-        resetRole();
-        resetPassword();
     }
 
     return (

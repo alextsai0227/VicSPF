@@ -1,4 +1,3 @@
-const mongoose = require('mongoose');
 const passport = require('passport');
 const router = require('express').Router();
 const auth = require('../auth');
@@ -56,7 +55,7 @@ router.post('/login', auth.optional, (req, res, next) => {
     });
   }
 
-  return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
+  return passport.authenticate('local_supplier', { session: false }, (err, passportUser, info) => {
     if(err) {
       return next(err);
     }
@@ -68,7 +67,11 @@ router.post('/login', auth.optional, (req, res, next) => {
       return res.json({ user: user.toAuthJSON() });
     }
 
-    return res.status(400).info;
+    return res.status(400).json({
+      errors: {
+        message: "couldn't find user"
+      }
+    });
   })(req, res, next);
 });
 
