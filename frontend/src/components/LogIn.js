@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {signUpStyles} from './Style'
-import { saveToken } from '../Helper'
+import { saveToken, setSupplierData } from '../Helper'
 
 // React related package
 import React from 'react';
@@ -49,6 +49,7 @@ export default function LogIn(props) {
                 // Todo: should navigate to supplier's page
                 const { user } = res['data']
                 const data = JSON.stringify(user);
+                setSupplierData(data)
                 const path = {
                     pathname: '/sup-profile',
                     state: data,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 
@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FormSocialBenefit() {
+export default function FormSocialBenefit(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         columns: [
@@ -21,7 +21,18 @@ export default function FormSocialBenefit() {
             { enterprise: 'ABC company', service: 'some service', value: 10000 },
         ],
     });
-
+    
+    useEffect(()=>{
+        //componentDidMount 及 componentDidUpdate
+        const data = state.data
+        window.VIC.socialBenefit = data
+        console.log(`更新後的 State ${data[0].role}`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State ${data[0].role}`)
+        })
+    
+    })
     return (
         <div className={classes.root}>
             <h1>Verified Social Benefits</h1>

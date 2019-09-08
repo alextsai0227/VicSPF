@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 
@@ -9,9 +9,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FormCohortsEmp() {
+export default function FormCohortsEmp(props) {
     const classes = useStyles();
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         columns: [
             { title: 'Group ', field: 'group' },
             { title: 'Current Number Employed', field: 'currentNumEmp', type: 'numeric' },
@@ -22,6 +22,18 @@ export default function FormCohortsEmp() {
             { group: 'Migrant', currentNumEmp: 0, futureNumEmp: 3 },
         ],
     });
+
+    useEffect(()=>{
+        //componentDidMount 及 componentDidUpdate
+        const data = state.data
+        window.VIC.cohortEmp = data
+        console.log(`更新後的 State ${data[0].role}`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State ${data[0].role}`)
+        })
+    
+    })
 
     return (
         <div className={classes.root}>

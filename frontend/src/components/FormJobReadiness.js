@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 
@@ -9,9 +9,9 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FormJobReadiness() {
+export default function FormJobReadiness(props) {
     const classes = useStyles();
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         columns: [
             { title: 'Group ', field: 'group' },
             { title: 'Number of People', field: 'numPeople', type: 'numeric' },
@@ -22,6 +22,18 @@ export default function FormJobReadiness() {
             { group: 'Single parents', numPeople: 20, numHours: 30 },
         ],
     });
+
+    useEffect(()=>{
+        //componentDidMount 及 componentDidUpdate
+        const data = state.data
+        window.VIC.jobReadiness = data
+        console.log(`更新後的 State ${data[0].role}`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State ${data[0].role}`)
+        })
+    
+    })
 
     return (
         <div className={classes.root}>

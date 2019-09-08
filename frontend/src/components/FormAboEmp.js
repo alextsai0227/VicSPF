@@ -1,76 +1,77 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import IconButton from 'material-ui/IconButton';
-import AddIcon from '@material-ui/icons/Add';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import MaterialTable from 'material-table';
 
 const useStyles = makeStyles(theme => ({
     root: {
         width: '90%',
         margin: 'auto',
-        marginTop: theme.spacing(3),
-        overflowX: 'auto',
-    },
-    table: {
-        minWidth: 650,
-    },
-    addButton: {
-        textAlign: 'right',
     }
 }));
 
-function createData(role, year) {
-    return { role, year };
-}
-
-const rows = [
-    createData('Chief', 2),
-    createData('Waiter', 3),
-];
-
-export default function AboEmpTable() {
+export default function FormAboEmp(props) {
+    console.log("====in Abo====")
+    console.log(props)
     const classes = useStyles();
+    const [state, setState] = useState({
+        columns: [
+            { title: 'Aboriginal Roles To Be Recruited ', field: 'role' },
+            { title: 'Proposed Recruitment Year', field: 'year', type: 'numeric' }
+        ],
+        data: [
+            { role: 'Chief', year: 2 },
+            { role: 'Waiter', year: 3 }
+        ],
+    });
 
+    useEffect(()=>{
+        //componentDidMount 及 componentDidUpdate
+        const data = state.data
+        window.VIC.aboEmp = data
+        console.log(`更新後的 State ${data[0].role}`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State ${data[0].role}`)
+        })
+    
+    })
     return (
-        <>
-            <Button variant="contained" size="medium" color="primary" className={classes.addButton}>
-                Add
-            </Button>
-            <Paper className={classes.root}>
-                <Table className={classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell align="left">Edit</TableCell>
-                            <TableCell align="center">Delete</TableCell>
-                            <TableCell align="center">Aboriginal Roles To Be Recruited</TableCell>
-                            <TableCell align="right">Proposed Recruitment Year</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map(row => (
-                            <TableRow key={row.role}>
-                                <TableCell align="left">
-                                    <EditIcon />
-                                </TableCell>
-                                <TableCell> 
-                                    <DeleteIcon />
-                                </TableCell>
-                                <TableCell align="center">{row.role}</TableCell>
-                                
-                                <TableCell align="right">{row.year}</TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Paper>
-        </>
+        <div className={classes.root}>
+            <h1>Aboriginal Employment</h1>
+            <MaterialTable
+                className={classes.table}
+                columns={state.columns}
+                data={state.data}
+                editable={{
+                    onRowAdd: newData =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                const data = [...state.data];
+                                data.push(newData);
+                                setState({ ...state, data });
+                            }, 600);
+                        }),
+                    onRowUpdate: (newData, oldData) =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                const data = [...state.data];
+                                data[data.indexOf(oldData)] = newData;
+                                setState({ ...state, data });
+                            }, 600);
+                        }),
+                    onRowDelete: oldData =>
+                        new Promise(resolve => {
+                            setTimeout(() => {
+                                resolve();
+                                const data = [...state.data];
+                                data.splice(data.indexOf(oldData), 1);
+                                setState({ ...state, data });
+                            }, 600);
+                        }),
+                }}
+            />
+        </div>
     );
 }

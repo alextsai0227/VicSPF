@@ -13,7 +13,7 @@ import FormJobReadiness from './FormJobReadiness';
 import FormPreview from './FormPreview';
 import FormComplete from './FormComplete';
 import NaviBar from './PrimarySearchAppBar';
-
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -32,46 +32,73 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function getSteps() {
-  return ['Aboriginal Employment', 'Cohorts Employment', 
-          'Verified Social Benefits', 'Job Readiness Activities', 'Preview', 'Complete'];
-}
-
-function getStepContent(stepIndex) {
-  switch (stepIndex) {
-    case 0:
-      return <FormAboEmp /> ;
-    case 1:
-      return <FormCohortsEmp /> ;
-    case 2:
-      return <FormSocialBenefit /> ;
-    case 3:
-      return <FormJobReadiness /> ;
-    case 4:
-      return <FormPreview /> ;
-    case 5:
-      return <FormComplete /> ;
-  }
-}
-
 export default function FormStepper(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
-  //   const [activeStep, setActiveStep] = React.useState({
-  //   supplierName: '',
-  //   abn: '',
-  //   activityType: ''
-  //   });
   const steps = getSteps();
   
   function handleNext() {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
+
+    if (activeStep === 4){
+      const data = {
+        'aboEmp': window.VIC.aboEmp,
+        'cohortEmp': window.VIC.cohortEmp,
+        'jobReadiness': window.VIC.jobReadiness,
+        'socialBenefit': window.VIC.socialBenefit
+      };
+      
+      axios({
+        method: 'post',
+        url: `http://localhost:8000/api/supplier/form`,
+        data: {form: data},
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    }
   }
 
   function handleBack() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   }
 
+  function getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
+        return <FormAboEmp props={props}/> ;
+      case 1:
+        return <FormCohortsEmp props={props}/> ;
+      case 2:
+        return <FormSocialBenefit props={props}/> ;
+      case 3:
+        return <FormJobReadiness props={props}/> ;
+      case 4:
+        return <FormPreview props={props}/> ;
+      case 5:
+        return <FormComplete props={props}/> ;
+    }
+  }
+
+  function getSteps() {
+    return ['Aboriginal Employment', 'Cohorts Employment', 
+            'Verified Social Benefits', 'Job Readiness Activities', 'Preview', 'Complete'];
+  }
+  function sitchButton(){
+    if(activeStep === steps.length - 1){
+      return 'Finish'
+    }else if(activeStep === steps.length - 2){
+      return 'Submit'
+    }else{
+      return 'Next'
+    }
+  }
   return (
     <div>
       <NaviBar />
@@ -102,7 +129,7 @@ export default function FormStepper(props) {
                   Back
                 </Button>
                 <Button variant="contained" color="primary" onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                  {sitchButton()}
                 </Button>
               </div>
             </div>

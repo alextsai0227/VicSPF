@@ -18,7 +18,7 @@ export default function FormSupplierDetail(props) {
   const [company_name, updateCompanyName, resetCompanyName] = UseInputHook('');
   const [abn, updateAbn, resetAbn] = UseInputHook('');
   const [phone, updatePhone, resetPhone] = UseInputHook('');
-  
+ 
   useEffect(()=>{
     if (props.location && props.location.state){
         //componentDidMount 及 componentDidUpdate
@@ -66,35 +66,35 @@ export default function FormSupplierDetail(props) {
   }
 
   return (
-    <div>
-      <NaviBar />
-      <MuiThemeProvider>
-        <React.Fragment>
             <div>
-              <h1>Supplier Details</h1>
-              <TextField
-                  floatingLabelText="Company Name"
-                  value={company_name}
-                  onChange={updateCompanyName}
-              />
-              <br />
-              <TextField
-                  floatingLabelText="ABN"
-                  value={abn}
-                  onChange={updateAbn}
-              />
-              <br />
-              <TextField
-                  floatingLabelText="Phone"
-                  value={phone}
-                  onChange={updatePhone}
-              />
-              <br />
-              <Button variant="contained" color="primary" onClick={handleUpdate}>
+            <NaviBar props={props}/>
+            <MuiThemeProvider>
+              <React.Fragment>
+                  <div>
+                    <h1>Supplier Details</h1>
+                    <TextField
+                        floatingLabelText="Company Name"
+                        value={company_name}
+                        onChange={updateCompanyName}
+                    />
+                    <br />
+                    <TextField
+                        floatingLabelText="ABN"
+                        value={abn}
+                        onChange={updateAbn}
+                    />
+                    <br />
+                    <TextField
+                        floatingLabelText="Phone"
+                        value={phone}
+                        onChange={updatePhone}
+                    />
+                    <br />
+                    <Button variant="contained" color="primary" onClick={handleUpdate}>
                 Update
               </Button>
             </div>
-        </React.Fragment>
+            </React.Fragment>
       </MuiThemeProvider>
     </div>
   );

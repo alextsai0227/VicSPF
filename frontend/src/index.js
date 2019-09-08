@@ -5,10 +5,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// global object (global variable) 
+const VIC= {};
+window.VIC = VIC
+
 ReactDOM.render((
     <BrowserRouter>
         <App />
     </ BrowserRouter>
 ), document.getElementById('root'));
-
-// serviceWorker.unregister();

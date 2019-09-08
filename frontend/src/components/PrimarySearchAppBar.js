@@ -4,7 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
@@ -15,7 +14,6 @@ import MailIcon from '@material-ui/icons/Mail';
 import AddFormIcon from '@material-ui/icons/LibraryAdd';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -110,6 +108,12 @@ function PrimarySearchAppBar(props) {
 
   function handleAddForm(event) {
     // Todo: redirect to "/form"
+    const path = {
+      pathname: '/form',
+      state: props.location.state,
+    }
+    props.history.push(path)
+
   }
 
   function handleLogout(evt){
