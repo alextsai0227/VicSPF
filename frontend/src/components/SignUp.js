@@ -54,7 +54,7 @@ export default function SignUp(props) {
                 console.log(res);
                 resetField()
                 // Todo: should navigate to supplier's page
-                props.history.push("/form")
+                props.history.push("/sup-profile")
             }).catch(err =>{
                 // Todo: Signup faild: should give advice to user
                 console.log(err)
@@ -65,7 +65,7 @@ export default function SignUp(props) {
             axios.post(`http://localhost:8000/api/verifier`, { user }).then(res => {
                 resetField()
                 // Todo: should navigate to verifier's page
-                props.history.push("/form")
+                props.history.push("/ver-profile")
                 console.log(res);
             }).catch(err =>{
                 // Todo: Signup faild: should give advice to user

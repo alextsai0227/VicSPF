@@ -10,12 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {signUpStyles} from './Style'
 
+
 // React related package
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UseInputHook from './UseInputHook';
 import axios from 'axios';
-
 
 export default function LogIn(props) {
     const classes = signUpStyles();  
@@ -40,15 +40,15 @@ export default function LogIn(props) {
             email: email,
             password: password
         };
-        // For_Test
-        alert(`email: ${email} role: ${role} password: ${password}`);
 
         if (role === 'supplier'){
             // save supplier
             axios.post(`http://localhost:8000/api/supplier/login`, { user }).then(res => {
                 resetField()
+                const loginUser = res['user']
+                console.log(res)
                 // Todo: should navigate to supplier's page
-                props.history.push("/form")
+                props.history.push("/sup-profile")
             }).catch(error =>{
                 alert(`No account found`);
                 // Todo: Signup faild: should give advice to user
@@ -58,7 +58,7 @@ export default function LogIn(props) {
             axios.post(`http://localhost:8000/api/verifier/login`, { user }).then(res => {
                 resetField()
                 // Todo: should navigate to verifier's page
-                props.history.push("/form")
+                props.history.push("/ver-profile")
             }).catch(err =>{
                 alert(`No account found`);
                 // Todo: Signup faild: should give advice to user

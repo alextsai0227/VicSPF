@@ -14,7 +14,6 @@ const supplierSchema = new Schema({
 	state:  String, 
     abn: String, 
     company_name: String,
-    password: String,
     application_id: {type: mongoose.Schema.Types.ObjectId, ref:'Application'}
 });
 

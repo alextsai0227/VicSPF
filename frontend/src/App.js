@@ -3,9 +3,10 @@ import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 // import FormAboEmp from './components/FormAboEmp';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn'; 
-import Profile from './components/Profile';
 import FormStepper from './components/FormStepper';
 import './App.css';
+import FormSupplierDetail from './components/FormSupplierDetail';
+import FormVerifierDetail from './components/FormVerifierDetail';
 
 function App() {
     return (
@@ -16,7 +17,8 @@ function App() {
             <Route exact path='/signup' component={withRouter(SignUp)} />
             <Route exact path='/login' component={withRouter(LogIn)} />
             <Route exact path='/form' component={withRouter(FormStepper)} />
-            <Route exact path='/profile' component={withRouter(Profile)} />
+            <Route exact path='/sup-profile' component={withRouter(FormSupplierDetail)} />
+            <Route exact path='/ver-profile' component={withRouter(FormVerifierDetail)} />
           </Switch>
         </BrowserRouter>
       </div>

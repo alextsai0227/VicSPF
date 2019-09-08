@@ -8,7 +8,7 @@ function handleUpdate() {
   // Todo: save the data into database.
 }
 
-class FormSupplierDetail extends Component {
+class FormVerifierDetail extends Component {
   render() {
     // const { values, handleChange } = this.props;
     return (
@@ -17,7 +17,7 @@ class FormSupplierDetail extends Component {
         <MuiThemeProvider>
           <React.Fragment>
               <div>
-                <h1>Supplier Details</h1>
+                <h1>Verifier Details</h1>
                 <TextField
                     hintText="Enter Your Company Name"
                     floatingLabelText="Supplier Name"
@@ -56,4 +56,4 @@ const styles = {
   }
 };
 
-export default FormSupplierDetail;
+export default FormVerifierDetail;
