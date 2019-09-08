@@ -66,15 +66,6 @@ export default function SupProfile2() {
         evt.preventDefault();
         alert(`Company Name: ${companyName} ABN: ${abn} email: ${email} phone: ${phone} 
                street: ${street} suburb: ${suburb} state: ${state} password: ${password}`);
-        resetCompanyName();
-        resetAbn();
-        resetEmail();
-        resetPhone();
-        resetStreet();
-        resetSuburb();
-        resetState();
-        resetPassword();
-    }
 
     return (
         <>
@@ -100,7 +91,7 @@ export default function SupProfile2() {
                                     name="email"
                                     defaultValue="supplier@gmail.com"
                                     InputProps={{
-                                        readOnly: false,
+                                        readOnly: true,
                                       }}
                                     // value={email}
                                 />

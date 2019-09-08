@@ -9,7 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {signUpStyles} from './Style'
-
+import { saveToken } from '../Helper'
 
 // React related package
 import React from 'react';
@@ -45,20 +45,29 @@ export default function LogIn(props) {
             // save supplier
             axios.post(`http://localhost:8000/api/supplier/login`, { user }).then(res => {
                 resetField()
-                const loginUser = res['user']
-                console.log(res)
+                saveToken(res['data']['user'])
                 // Todo: should navigate to supplier's page
-                props.history.push("/sup-profile")
+                const { user } = res['data']
+                const data = JSON.stringify(user);
+                const path = {
+                    pathname: '/sup-profile',
+                    state: data,
+                }
+                props.history.push(path)
             }).catch(error =>{
-                alert(`No account found`);
+                alert(error);
                 // Todo: Signup faild: should give advice to user
             })
         }else{
             // save verifier
             axios.post(`http://localhost:8000/api/verifier/login`, { user }).then(res => {
                 resetField()
+                saveToken(res['data']['user'])
                 // Todo: should navigate to verifier's page
-                props.history.push("/ver-profile")
+                const { user } = res['data']
+                const data = JSON.stringify(user);
+                const path = `/ver-profile/${data}`;
+                props.history.push(path)
             }).catch(err =>{
                 alert(`No account found`);
                 // Todo: Signup faild: should give advice to user
