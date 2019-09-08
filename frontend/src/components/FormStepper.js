@@ -13,10 +13,11 @@ import FormSocialBenefit from './FormSocialBenefit';
 import FormJobReadiness from './FormJobReadiness';
 import FormPreview from './FormPreview';
 import FormComplete from './FormComplete';
+import NavBar from './NavBar';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '90%'
+    width: '100%'
   },
   backButton: {
     marginRight: theme.spacing(1)
@@ -74,6 +75,7 @@ export default function FormStepper() {
 
   return (
     <div className={classes.root}>
+      <NavBar />
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map(label => (
           <Step key={label}>
