@@ -100,7 +100,8 @@ function PrimarySearchAppBar(props) {
   }
 
   function handleProfile() {
-    props.history.push("/profile")
+    // Todo: check users type to different profile
+    props.history.push("/sup-profile")
     setAnchorEl(null);
     handleMobileMenuClose(); 
   }
