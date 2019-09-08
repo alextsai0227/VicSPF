@@ -5,9 +5,7 @@ import MaterialTable from 'material-table';
 const useStyles = makeStyles(theme => ({
     root: {
         width: '90%',
-        // display: 'flex',
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        margin: 'auto'
     }
 }));
 

@@ -14,7 +14,6 @@ const verifierSchema = new mongoose.Schema({
 	state: String,
     abn: String,
     company_name: String,
-    password: String,
     role_id: {type: mongoose.Types.ObjectId, ref: 'Role'}
 });
 
