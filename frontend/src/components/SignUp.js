@@ -16,6 +16,7 @@ import {signUpStyles} from './Style'
 import React from 'react';
 import { Link } from 'react-router-dom';
 import UseInputHook from './UseInputHook';
+import { saveToken } from '../Helper';
 import axios from 'axios';
 // Material UI
 
@@ -45,14 +46,12 @@ export default function SignUp(props) {
             email: email,
             password: password
         };
-        // For_Test
-        alert(`email: ${email} role: ${role} password: ${password}`);
 
         if (role === 'supplier'){
             // save supplier
             axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
-                console.log(res);
                 resetField()
+                saveToken(res['data'][user])
                 // Todo: should navigate to supplier's page
                 props.history.push("/sup-profile")
             }).catch(err =>{
@@ -64,9 +63,9 @@ export default function SignUp(props) {
             // save verifier
             axios.post(`http://localhost:8000/api/verifier`, { user }).then(res => {
                 resetField()
+                saveToken(res['data'][user])
                 // Todo: should navigate to verifier's page
                 props.history.push("/ver-profile")
-                console.log(res);
             }).catch(err =>{
                 // Todo: Signup faild: should give advice to user
                 console.log(err)

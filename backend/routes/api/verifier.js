@@ -63,9 +63,8 @@ router.post('/login', auth.optional, (req, res, next) => {
 
     if(passportUser) {
       const user = passportUser;
-      user.token = passportUser.generateJWT();
 
-      return res.json({ user: user.toAuthJSON() });
+      return res.json({ user: user.getData() });
     }
 
     return res.status(400).json({
@@ -86,7 +85,7 @@ router.get('/current', auth.required, (req, res, next) => {
         return res.sendStatus(400);
       }
 
-      return res.json({ user: user.toAuthJSON() });
+      return res.json({ user: user.getData() });
     });
 });
 

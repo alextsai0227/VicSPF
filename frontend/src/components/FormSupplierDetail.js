@@ -1,59 +1,96 @@
-import React, { Component } from 'react';
+import React ,{ useEffect }from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import Button from '@material-ui/core/Button';
 import NaviBar from './PrimarySearchAppBar';
+import UseInputHook from './UseInputHook';
+import axios from 'axios';
 
-function handleUpdate() {
-  // Todo: save the data into database.
-}
 
-class FormSupplierDetail extends Component {
-  render() {
-    // const { values, handleChange } = this.props;
-    return (
-      <div>
-        <NaviBar />
-        <MuiThemeProvider>
-          <React.Fragment>
-              <div>
-                <h1>Supplier Details</h1>
-                <TextField
-                    hintText="Enter Your Company Name"
-                    floatingLabelText="Supplier Name"
-                    // onChange={handleChange('supplierName')}
-                    // defaultValue={values.supplierName}
-                />
-                <br />
-                <TextField
-                    hintText="Enter Your ABN"
-                    floatingLabelText="ABN"
-                    // onChange={handleChange('abn')}
-                    // defaultValue={values.abn}
-                />
-                <br />
-                <TextField
-                    hintText="Enter Your Activity type"
-                    floatingLabelText="Activity Type"
-                    // onChange={handleChange('activityType')}
-                    // defaultValue={values.activityType}
-                />
-                <br />
-                <Button variant="contained" color="primary" onClick={handleUpdate}>
-                  Update
-                </Button>
-              </div>
-          </React.Fragment>
-        </MuiThemeProvider>
-      </div>
-    );
+
+export default function FormSupplierDetail(props) {
+  const [company_name, updateCompanyName, resetCompanyName] = UseInputHook('');
+  const [abn, updateAbn, resetAbn] = UseInputHook('');
+  const [phone, updatePhone, resetPhone] = UseInputHook('');
+  
+  useEffect(()=>{
+    if (props.location && props.location.state){
+        //componentDidMount 及 componentDidUpdate
+        const data = JSON.parse(props.location.state)
+        if (data.company_name) {
+          updateCompanyName(data.company_name)
+        } 
+        if (data.phone){
+          updatePhone(data.phone)
+        } 
+        if (data.abn){
+          updateAbn(data.abn)
+        }
+        console.log(`更新後的 State`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State`)
+        })
+    }
+
+  })
+
+
+
+  // const getSupplierDetail = () => {
+  //   const token = 'Token ' + window.localStorage.getItem('token')
+  //   const headers = {
+  //     'Content-Type': 'application/json',
+  //     'Authorization': token
+  //   }
+    
+  //   axios.get(`http://localhost:8000/api/supplier/current`, {
+  //       headers: headers
+  //     })
+  //     .then((res) => {
+  //       console.log(res)
+  //     })
+  //     .catch((error) => {
+  //       console.log(error)
+  //     })
+  // }
+  
+  const handleUpdate = () => {
+    
   }
+
+  return (
+    <div>
+      <NaviBar />
+      <MuiThemeProvider>
+        <React.Fragment>
+            <div>
+              <h1>Supplier Details</h1>
+              <TextField
+                  floatingLabelText="Company Name"
+                  value={company_name}
+                  onChange={updateCompanyName}
+              />
+              <br />
+              <TextField
+                  floatingLabelText="ABN"
+                  value={abn}
+                  onChange={updateAbn}
+              />
+              <br />
+              <TextField
+                  floatingLabelText="Phone"
+                  value={phone}
+                  onChange={updatePhone}
+              />
+              <br />
+              <Button variant="contained" color="primary" onClick={handleUpdate}>
+                Update
+              </Button>
+            </div>
+        </React.Fragment>
+      </MuiThemeProvider>
+    </div>
+  );
+
 }
-
-const styles = {
-  button: {
-    margin: 15
-  }
-};
-
-export default FormSupplierDetail;

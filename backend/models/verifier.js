@@ -47,6 +47,19 @@ verifierSchema.methods.toAuthJSON = function() {
 	};
 };
 
+verifierSchema.methods.getData = function() {
+	return {
+	  _id: this._id,
+	  email: this.email,
+	  token: this.generateJWT(),
+	  phone: this.phone,
+	  street:  this.street,
+	  suburb:  this.suburb,
+	  state:  this.state, 
+      abn: this.abn, 
+      company_name: this.company_name,
+	};
+};
 module.exports = {
 	model: mongoose.model('Verifier', verifierSchema),
 	schema: verifierSchema
