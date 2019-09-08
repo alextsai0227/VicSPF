@@ -26,19 +26,13 @@ import axios from 'axios';
 
 export default function SignUp(props) {
     const classes = signUpStyles();  
-    const [email, updateEmail, resetEmail] = UseInputHook('');
-    const [role, updateRole, resetRole] = UseInputHook('');
-    const [password, updatePassword, resetPassword] = UseInputHook('');
+    const [email, updateEmail] = UseInputHook('');
+    const [role, updateRole] = UseInputHook('');
+    const [password, updatePassword] = UseInputHook('');
     const roles = [
         { value: 'supplier', label: 'Supplier'},
         { value: 'verifier', label: 'Verifier'}
     ];
-
-    const resetField = () => {
-        resetEmail();
-        resetRole();
-        resetPassword();
-    }
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -50,7 +44,6 @@ export default function SignUp(props) {
         if (role === 'supplier'){
             // save supplier
             axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
-                resetField()
                 saveToken(res['data'][user])
                 // Todo: should navigate to supplier's page
                 props.history.push("/sup-profile")
@@ -62,7 +55,6 @@ export default function SignUp(props) {
             console.log("in verifier")
             // save verifier
             axios.post(`http://localhost:8000/api/verifier`, { user }).then(res => {
-                resetField()
                 saveToken(res['data'][user])
                 // Todo: should navigate to verifier's page
                 props.history.push("/ver-profile")

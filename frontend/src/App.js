@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 // import FormAboEmp from './components/FormAboEmp';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn'; 
-import SupProfile from './components/SupProfile';
+// import SupProfile from './components/SupProfile';
 import FormStepper from './components/FormStepper';
 import './App.css';
 import FormSupplierDetail from './components/FormSupplierDetail';
@@ -18,8 +18,7 @@ function App() {
             <Route exact path='/signup' component={withRouter(SignUp)} />
             <Route exact path='/login' component={withRouter(LogIn)} />
             <Route exact path='/form' component={withRouter(FormStepper)} />
-            <Route exact path='/sup-profile2' component={withRouter(FormSupplierDetail)} />   {/* FAIL */}
-            <Route exact path='/sup-profile' component={withRouter(SupProfile)} />  {/* SUCC */}
+            <Route exact path='/sup-profile' component={withRouter(FormSupplierDetail)} />  
             <Route exact path='/ver-profile' component={withRouter(FormVerifierDetail)} />
           </Switch>
         </BrowserRouter>
