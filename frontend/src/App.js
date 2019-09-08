@@ -17,7 +17,7 @@ function App() {
             <Route exact path='/signup' component={withRouter(SignUp)} />
             <Route exact path='/login' component={withRouter(LogIn)} />
             <Route exact path='/form' component={withRouter(FormStepper)} />
-            <Route exact path='/sup-profile' component={withRouter(FormSupplierDetail)} />
+            <Route exact path='/sup-profile' component={withRouter(FormSupplierDetail)} />  
             <Route exact path='/ver-profile' component={withRouter(FormVerifierDetail)} />
           </Switch>
         </BrowserRouter>
