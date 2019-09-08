@@ -10,10 +10,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Tooltip from '@material-ui/core/Tooltip';
 import MailIcon from '@material-ui/icons/Mail';
+import AddFormIcon from '@material-ui/icons/LibraryAdd';
+import ExitToApp from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-
 import { withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -106,8 +108,12 @@ function PrimarySearchAppBar(props) {
     handleMobileMenuClose(); 
   }
 
-  function handleMobileMenuOpen(event) {
-    setMobileMoreAnchorEl(event.currentTarget);
+  function handleAddForm(event) {
+    // Todo: redirect to "/form"
+  }
+
+  function handleLogout(evt){
+    
   }
 
   const menuId = 'primary-search-account-menu';
@@ -138,21 +144,23 @@ function PrimarySearchAppBar(props) {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
+        <IconButton  color="inherit">
           <Badge badgeContent={4} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
+
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
+        <IconButton color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -175,60 +183,33 @@ function PrimarySearchAppBar(props) {
             edge="start"
             className={classes.menuButton}
             color="inherit"
-            aria-label="open drawer"
           >
             <MenuIcon />
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
-            VisSPF
+            VicSPF
           </Typography>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            {/** Todo:
-             * email icon => need to be fix
-             */}
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            {/** Todo:
-             * notification icon => need to be fix
-             */}
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            {/** Todo:
-             * profile icon => need to be fix
-             */}
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
+          
+
+            {/* add form button */}
+            <Tooltip title="Submit Form">
+              <IconButton color="inherit" onClick={handleAddForm}>
+                <AddFormIcon />
+              </IconButton>
+            </Tooltip>
+
+            {/* logout button */}
+            <Tooltip title="Logout">
+              <IconButton  color="inherit" onClick={handleLogout} >
+                <ExitToApp />
+              </IconButton>
+            </Tooltip>
+
           </div>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
     </div>
   );
 }
