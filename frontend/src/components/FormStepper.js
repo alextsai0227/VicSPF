@@ -12,6 +12,7 @@ import FormSocialBenefit from './FormSocialBenefit';
 import FormJobReadiness from './FormJobReadiness';
 import FormPreview from './FormPreview';
 import FormComplete from './FormComplete';
+import NaviBar from './PrimarySearchAppBar';
 
 
 const useStyles = makeStyles(theme => ({
@@ -72,38 +73,41 @@ export default function FormStepper(props) {
   }
 
   return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            
-            {/* <Typography className={classes.instructions}>Submitted Successfully! <br /> You can track the progress here.</Typography>
-            <Link to='/profile'>Back to profile</Link> */}
-          </div>
-        ) : (
-          <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div className={classes.buttons}>
-              <Button
-                disabled={activeStep === 0 || activeStep === 5 }
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Back
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
+    <div>
+      <NaviBar />
+      <div className={classes.root}>
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
+        <div>
+          {activeStep === steps.length ? (
+            <div>
+              
+              {/* <Typography className={classes.instructions}>Submitted Successfully! <br /> You can track the progress here.</Typography>
+              <Link to='/profile'>Back to profile</Link> */}
             </div>
-          </div>
-        )}
+          ) : (
+            <div>
+              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+              <div className={classes.buttons}>
+                <Button
+                  disabled={activeStep === 0 || activeStep === 5 }
+                  onClick={handleBack}
+                  className={classes.backButton}
+                >
+                  Back
+                </Button>
+                <Button variant="contained" color="primary" onClick={handleNext}>
+                  {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                </Button>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
