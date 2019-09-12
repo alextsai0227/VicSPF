@@ -16,52 +16,65 @@ import { supProfileStyles } from './Style'
 import axios from 'axios';
 
 export default function FormSupplierDetail(props) {
+  let r_companyName = ''
+  let r_abn = ''
+  let r_email = ''
+  let r_phone = ''
+  let r_street = ''
+  let r_suburb = ''
+  let r_state = ''
+
+  if (props.location && props.location.state){
+    //componentDidMount 及 componentDidUpdate
+    const data = JSON.parse(props.location.state)
+    if (data.company_name) {
+      r_companyName = data.company_name
+    } 
+    if (data.phone){
+      r_phone = data.phone
+    } 
+    if (data.abn){
+      r_abn = data.abn
+    }
+    if (data.email){
+      r_email = data.email
+    }
+    if (data.street){
+      r_street = data.street
+    }
+    if (data.suburb){
+      r_suburb = data.suburb
+    }
+    if (data.state){
+      r_state = data.state
+    }
+    
+  }
+
   const classes = supProfileStyles();
   const [readOnly, toggle] = useToggle(true);
-  const [companyName, updateCompanyName] = useInputState('');
-  const [abn, updateAbn] = useInputState('');
-  const [email, updateEmail] = useInputState('');
-  const [phone, updatePhone] = useInputState('');
-  const [street, updateStreet] =  useInputState('');
-  const [suburb, updateSuburb] = useInputState('');
-  const [state, updateState] =  useInputState('');
+  const [companyName, updateCompanyName] = useInputState(r_companyName);
+  const [abn, updateAbn] = useInputState(r_abn);
+  const [email, updateEmail] = useInputState(r_email);
+  const [phone, updatePhone] = useInputState(r_phone);
+  const [street, updateStreet] =  useInputState(r_street);
+  const [suburb, updateSuburb] = useInputState(r_suburb);
+  const [state, updateState] =  useInputState(r_state);
   const [password, updatePassword] = useInputState('');
+  
 
-  // const states = [
-  //   { value: 'NSW', label: 'NSW'},
-  //   { value: 'VIC', label: 'VIC'},
-  //   { value: 'QLD', label: 'QLD'},
-  //   { value: 'WA', label: 'WA' },
-  //   { value: 'SA', label: 'SA'},
-  //   { value: 'TAS', label: 'TAS'},
-  //   { value: 'ACT', label: 'ACT'},
-  //   { value: 'NT', label: 'NT'}
-  // ];
- 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // alert(`Company Name: ${companyName} ABN: ${abn} email: ${email} phone: ${phone} 
     //        street: ${street} suburb: ${suburb} state: ${state} password: ${password}`);
   }
+
   useEffect(()=>{
-    if (props.location && props.location.state){
-        //componentDidMount 及 componentDidUpdate
-        const data = JSON.parse(props.location.state)
-        if (data.company_name) {
-          updateCompanyName(data.company_name)
-        } 
-        if (data.phone){
-          updatePhone(data.phone)
-        } 
-        if (data.abn){
-          updateAbn(data.abn)
-        }
-        console.log(`更新後的 State`)
-        //componentDidUpdate 及 componentWillUnmount
-        return(()=>{
-            console.log(`更新前的 State`)
-        })
-    }
+    console.log(`更新後的 State`)
+    //componentDidUpdate 及 componentWillUnmount
+    return(()=>{
+        console.log(`更新前的 State`)
+    })
 
   })
 
@@ -103,12 +116,11 @@ export default function FormSupplierDetail(props) {
                                 id="email"
                                 // label="Email Address"
                                 // name="email"
-                                defaultValue="supplier@gmail.com"
                                 readOnly={true}  // ALWAYS TRUE
-                                // value={email}
+                                value={email}
                             />
                         </Grid>
-                        <Grid item xs={12}>
+                        {/*<Grid item xs={12}>
                             <TextField
                                 required
                                 fullWidth
@@ -118,12 +130,11 @@ export default function FormSupplierDetail(props) {
                                 id="password"
                                 // label="Password"
                                 // name="password"
-                                defaultValue="12345678"
                                 readOnly={readOnly}
                                 // value={password}
                                 onChange={e => updatePassword(e.target.value)}
                             />
-                        </Grid>        
+                        </Grid>*/}        
                         <Grid item xs={12}>
                             <TextField
                                 required
@@ -134,9 +145,8 @@ export default function FormSupplierDetail(props) {
                                 id="companyName"
                                 // label="Company Name"
                                 // name="companyName"
-                                defaultValue="ABC company"
                                 readOnly={readOnly}
-                                // value={companyName}
+                                value={companyName}
                                 onChange={e => updateCompanyName(e.target.value)}
                             />
                         </Grid>
@@ -150,9 +160,8 @@ export default function FormSupplierDetail(props) {
                                 id="abn"
                                 // label="ABN"
                                 // name="abn"
-                                defaultValue="A67548678"
                                 readOnly={readOnly}
-                                // value={abn}
+                                value={abn}
                                 onChange={e => updateAbn(e.target.value)}
                             />
                         </Grid>
@@ -166,9 +175,8 @@ export default function FormSupplierDetail(props) {
                                 id="phone"
                                 // label="Phone"
                                 // name="phone"
-                                defaultValue="042457538"
                                 readOnly={readOnly}
-                                // value={phone}
+                                value={phone}
                                 onChange={e => updatePhone(e.target.value)}
                             />
                         </Grid>
@@ -182,9 +190,8 @@ export default function FormSupplierDetail(props) {
                                 id="street"
                                 // label="Street"
                                 // name="street"
-                                defaultValue="swanston street"
                                 readOnly={readOnly}
-                                // value={street}
+                                value={street}
                                 onChange={e => updateStreet(e.target.value)}
                             />
                         </Grid>
@@ -198,9 +205,8 @@ export default function FormSupplierDetail(props) {
                                 id="suburb"
                                 // label="Suburb"
                                 // name="suburb"
-                                defaultValue="carlton"
                                 readOnly={readOnly}
-                                // value={suburb}
+                                value={suburb}
                                 onChange={e => updateSuburb(e.target.value)}
                             />
                         </Grid>
@@ -234,7 +240,7 @@ export default function FormSupplierDetail(props) {
                             required
                             fullWidth
                             floatingLabelText="State*"
-                            defaultValue="VIC"
+                            value={state}
                             readOnly={true}
                           ></TextField>) 
                           :
@@ -247,7 +253,6 @@ export default function FormSupplierDetail(props) {
                             onChange={updateState}
                             input={<Input name="state" id="state" />}
                             defaultValue="VIC"
-                            // name="state"
                           >
                           <MenuItem value=""></MenuItem>
                           <MenuItem value="NSW">NSW</MenuItem>
