@@ -1,5 +1,4 @@
 // Material UI
-// import { makeStyles } from '@material-ui/core/styles';
 import TextField from 'material-ui/TextField';
 import Button from '@material-ui/core/Button';
 import Container from '@material-ui/core/Container';
@@ -8,25 +7,25 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Select from '@material-ui/core/Select';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 // React related package
 import React ,{ useEffect }from 'react';
 import NaviBar from './PrimarySearchAppBar';
-import UseInputHook from './UseInputHook';
-import {signUpStyles} from './Style'
+import { useInputState, useToggle } from './Hooks';
+import { supProfileStyles } from './Style'
 import axios from 'axios';
 
 export default function FormSupplierDetail(props) {
-  const classes = signUpStyles();
-  const [companyName, updateCompanyName] = UseInputHook('');
-  const [abn, updateAbn] = UseInputHook('');
-  const [email, updateEmail] = UseInputHook('');
-  const [phone, updatePhone] = UseInputHook('');
-  const [street, updateStreet] = UseInputHook('');
-  const [suburb, updateSuburb] = UseInputHook('');
-  const [state, updateState] = UseInputHook('');
-  const [password, updatePassword] = UseInputHook('');
+  const classes = supProfileStyles();
+  const [readOnly, toggle] = useToggle(true);
+  const [companyName, updateCompanyName] = useInputState('');
+  const [abn, updateAbn] = useInputState('');
+  const [email, updateEmail] = useInputState('');
+  const [phone, updatePhone] = useInputState('');
+  const [street, updateStreet] =  useInputState('');
+  const [suburb, updateSuburb] = useInputState('');
+  const [state, updateState] =  useInputState('');
+  const [password, updatePassword] = useInputState('');
 
   // const states = [
   //   { value: 'NSW', label: 'NSW'},
@@ -41,8 +40,8 @@ export default function FormSupplierDetail(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    alert(`Company Name: ${companyName} ABN: ${abn} email: ${email} phone: ${phone} 
-           street: ${street} suburb: ${suburb} state: ${state} password: ${password}`);
+    // alert(`Company Name: ${companyName} ABN: ${abn} email: ${email} phone: ${phone} 
+    //        street: ${street} suburb: ${suburb} state: ${state} password: ${password}`);
   }
   useEffect(()=>{
     if (props.location && props.location.state){
@@ -85,10 +84,10 @@ export default function FormSupplierDetail(props) {
   // }
   
   return (
-    <>
+    <>    
+    {console.log(readOnly)}
       <NaviBar />
       <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <div className={classes.paper}>
 
                 <Typography component="h1" variant="h5">
@@ -107,9 +106,7 @@ export default function FormSupplierDetail(props) {
                                 // label="Email Address"
                                 // name="email"
                                 defaultValue="supplier@gmail.com"
-                                inputprops={{
-                                    readOnly: true,
-                                }}
+                                readOnly={true}  // ALWAYS TRUE
                                 // value={email}
                             />
                         </Grid>
@@ -123,7 +120,9 @@ export default function FormSupplierDetail(props) {
                                 id="password"
                                 // label="Password"
                                 // name="password"
-                                value={password}
+                                defaultValue="12345678"
+                                readOnly={readOnly}
+                                // value={password}
                                 onChange={e => updatePassword(e.target.value)}
                             />
                         </Grid>        
@@ -137,7 +136,9 @@ export default function FormSupplierDetail(props) {
                                 id="companyName"
                                 // label="Company Name"
                                 // name="companyName"
-                                value={companyName}
+                                defaultValue="ABC company"
+                                readOnly={readOnly}
+                                // value={companyName}
                                 onChange={e => updateCompanyName(e.target.value)}
                             />
                         </Grid>
@@ -151,7 +152,9 @@ export default function FormSupplierDetail(props) {
                                 id="abn"
                                 // label="ABN"
                                 // name="abn"
-                                value={abn}
+                                defaultValue="A67548678"
+                                readOnly={readOnly}
+                                // value={abn}
                                 onChange={e => updateAbn(e.target.value)}
                             />
                         </Grid>
@@ -165,7 +168,9 @@ export default function FormSupplierDetail(props) {
                                 id="phone"
                                 // label="Phone"
                                 // name="phone"
-                                value={phone}
+                                defaultValue="042457538"
+                                readOnly={readOnly}
+                                // value={phone}
                                 onChange={e => updatePhone(e.target.value)}
                             />
                         </Grid>
@@ -179,7 +184,9 @@ export default function FormSupplierDetail(props) {
                                 id="street"
                                 // label="Street"
                                 // name="street"
-                                value={street}
+                                defaultValue="swanston street"
+                                readOnly={readOnly}
+                                // value={street}
                                 onChange={e => updateStreet(e.target.value)}
                             />
                         </Grid>
@@ -193,7 +200,9 @@ export default function FormSupplierDetail(props) {
                                 id="suburb"
                                 // label="Suburb"
                                 // name="suburb"
-                                value={suburb}
+                                defaultValue="carlton"
+                                readOnly={readOnly}
+                                // value={suburb}
                                 onChange={e => updateSuburb(e.target.value)}
                             />
                         </Grid>
@@ -223,14 +232,15 @@ export default function FormSupplierDetail(props) {
                         </Grid>                       */}
 
                         <Grid item xs={12} sm={6}>
-                          {/* <TextField
+                          {readOnly? (<TextField
                             required
                             fullWidth
-                            hintText="Enter Your State"
                             floatingLabelText="State*"
-                            select
-                          ></TextField> */}
-                          <Select
+                            defaultValue="VIC"
+                            readOnly={true}
+                          ></TextField>) 
+                          :
+                          (<Select
                             required
                             fullWidth
                             hintText="Select Your State"
@@ -238,7 +248,7 @@ export default function FormSupplierDetail(props) {
                             value={state}
                             onChange={updateState}
                             input={<Input name="state" id="state" />}
-                            // displayEmpty
+                            defaultValue="VIC"
                             // name="state"
                           >
                           <MenuItem value=""></MenuItem>
@@ -250,7 +260,7 @@ export default function FormSupplierDetail(props) {
                           <MenuItem value="TAS">TAS</MenuItem>
                           <MenuItem value="ACT">ACT</MenuItem>
                           <MenuItem value="NT">NT</MenuItem>
-                        </Select>    
+                          </Select> )}   
                       </Grid>
                     </Grid>
                     <Button
@@ -260,7 +270,8 @@ export default function FormSupplierDetail(props) {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
-                    >Update
+                        onClick={toggle}
+                    >{readOnly?"Edit":"Save"}
                     </Button>                  
                 </form>
             </div>

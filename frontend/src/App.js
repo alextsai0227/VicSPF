@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
-// import FormAboEmp from './components/FormAboEmp';
+import ViewForms from './components/ViewForms';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn'; 
 // import SupProfile from './components/SupProfile';
@@ -14,7 +14,7 @@ function App() {
       <div className='App'>
         <BrowserRouter>
           <Switch>
-            {/* <Route exact path='/emp' component={withRouter(FormAboEmp)} /> */}
+            <Route exact path='/viewforms' component={withRouter(ViewForms)} /> {/* delete this line */}
             <Route exact path='/signup' component={withRouter(SignUp)} />
             <Route exact path='/login' component={withRouter(LogIn)} />
             <Route exact path='/form' component={withRouter(FormStepper)} />

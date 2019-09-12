@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default initialVal => {
+export const useInputState = (initialVal) =>{
     const [value, setValue] = useState(initialVal);
 
     const handleChange = e => {
@@ -16,3 +16,13 @@ export default initialVal => {
     // }
     return [value, handleChange];
 };
+
+export const useToggle = (editable) => {
+    const [state, setState] = useState(editable);
+    const toggle = () => {
+      setState(!state);
+    };
+    return [state, toggle];
+};
+
+  

@@ -15,20 +15,15 @@ import {signUpStyles} from './Style'
 // React related package
 import React from 'react';
 import { Link } from 'react-router-dom';
-import UseInputHook from './UseInputHook';
+import { useInputState } from './Hooks';
 import { saveToken } from '../Helper';
 import axios from 'axios';
-// Material UI
-
-
-
-
 
 export default function SignUp(props) {
     const classes = signUpStyles();  
-    const [email, updateEmail] = UseInputHook('');
-    const [role, updateRole] = UseInputHook('');
-    const [password, updatePassword] = UseInputHook('');
+    const [email, updateEmail] = useInputState('');
+    const [role, updateRole] = useInputState('');
+    const [password, updatePassword] = useInputState('');
     const roles = [
         { value: 'supplier', label: 'Supplier'},
         { value: 'verifier', label: 'Verifier'}
