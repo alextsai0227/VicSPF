@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 
@@ -9,19 +9,31 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function FormJobReadiness() {
+export default function FormJobReadiness(props) {
     const classes = useStyles();
-    const [state, setState] = React.useState({
+    const [state, setState] = useState({
         columns: [
-            { title: 'Group ', field: 'group' },
-            { title: 'Number of People', field: 'numPeople', type: 'numeric' },
-            { title: 'Number of Hours', field: 'numHours', type: 'numeric' }
+            { title: 'Group ', field: 'group_name' },
+            { title: 'Number of People', field: 'num_people', type: 'numeric' },
+            { title: 'Number of Hours', field: 'num_hour', type: 'numeric' }
         ],
         data: [
-            { group: 'Disengaged Youth', numPeople: 12, numHours: 50 },
-            { group: 'Single parents', numPeople: 20, numHours: 30 },
+            { group_name: 'Disengaged Youth', num_people: 12, num_hour: 50 },
+            { group_name: 'Single parents', num_people: 20, num_hour: 30 },
         ],
     });
+
+    useEffect(()=>{
+        //componentDidMount 及 componentDidUpdate
+        const data = state.data
+        window.VIC.jobReadiness = data
+        console.log(`更新後的 State ${JSON.stringify(data)}`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State ${JSON.stringify(data)}`)
+        })
+    
+    })
 
     return (
         <div className={classes.root}>

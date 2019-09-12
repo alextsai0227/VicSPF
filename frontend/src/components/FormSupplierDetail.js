@@ -37,7 +37,7 @@ export default function FormSupplierDetail(props) {
   //   { value: 'ACT', label: 'ACT'},
   //   { value: 'NT', label: 'NT'}
   // ];
-
+ 
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // alert(`Company Name: ${companyName} ABN: ${abn} email: ${email} phone: ${phone} 
@@ -84,16 +84,14 @@ export default function FormSupplierDetail(props) {
   // }
   
   return (
-    <>    
-    {console.log(readOnly)}
-      <NaviBar />
+    <>
+      <NaviBar props={props}/>
       <Container component="main" maxWidth="xs">
             <div className={classes.paper}>
 
                 <Typography component="h1" variant="h5">
                     Supplier Profile
                 </Typography>
-
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>

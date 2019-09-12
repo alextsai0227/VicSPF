@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import MaterialTable from 'material-table';
 
@@ -11,16 +11,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function AboEmpTable() {
+export default function FormAboEmp(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         tableOneColumns: [
-            { title: 'Existing Aboriginal Employee Roles ', field: 'existingRoles'},
-            { title: 'Years Recruited', field: 'yearsRecruited', type: 'numeric' }
+            { title: 'Existing Aboriginal Employee Roles ', field: 'recruit_role'},
+            { title: 'Years Recruited', field: 'recruit_year', type: 'numeric' }
         ],
         tableOneData: [
-            { existingRoles: 'Waiter', yearsRecruited: '1' },
-            { existingRoles: 'Accountant', yearsRecruited: '4' },
+            { recruit_role: 'Waiter', recruit_year: '1' },
+            { recruit_role: 'Accountant', recruit_year: '4' },
         ],
         tableTwoColumns: [
             { title: 'Aboriginal Roles To Be Recruited ', field: 'roleWillRecruit' },
@@ -32,10 +32,21 @@ export default function AboEmpTable() {
         ], 
     });
 
+    useEffect(()=>{
+        //componentDidMount 及 componentDidUpdate
+        const data = state.data
+        window.VIC.aboEmp = data
+
+        console.log(`更新後的 State ${JSON.stringify(data)}`)
+        //componentDidUpdate 及 componentWillUnmount
+        return(()=>{
+            console.log(`更新前的 State ${JSON.stringify(data)}`)
+        })
+    
+    })
     return (
         <div className={classes.root}>
             <h1>Aboriginal Employment</h1>
-
             {/* existing employment table */}
             <MaterialTable
                 title="Existing Employment"

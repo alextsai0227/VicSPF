@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import ViewForms from './components/ViewForms';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn'; 
-// import SupProfile from './components/SupProfile';
 import FormStepper from './components/FormStepper';
 import './App.css';
 import FormSupplierDetail from './components/FormSupplierDetail';

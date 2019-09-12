@@ -68,6 +68,12 @@ function PrimarySearchAppBar(props) {
 
   function handleAddForm(event) {
     // Todo: redirect to "/form"
+    const path = {
+      pathname: '/form',
+      state: props.location.state,
+    }
+    props.history.push(path)
+
   }
 
   function handleLogout(evt){

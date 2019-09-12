@@ -6,6 +6,10 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// global object (global variable) 
+const VIC= {};
+window.VIC = VIC
+
 ReactDOM.render((
     <MuiThemeProvider>
         <BrowserRouter>
@@ -13,5 +17,3 @@ ReactDOM.render((
         </ BrowserRouter>
     </MuiThemeProvider>
 ), document.getElementById('root'));
-
-// serviceWorker.unregister();
