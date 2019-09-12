@@ -23,18 +23,18 @@ export default function FormAboEmp(props) {
             { recruit_role: 'Accountant', recruit_year: '4' },
         ],
         tableTwoColumns: [
-            { title: 'Aboriginal Roles To Be Recruited ', field: 'roleWillRecruit' },
-            { title: 'Proposed Recruitment Year', field: 'recruitmentYear', type: 'numeric' }
+            { recruit_role: 'Aboriginal Roles To Be Recruited ', field: 'recruit_year' },
+            { recruit_role: 'Proposed Recruitment Year', field: 'recruit_year', type: 'numeric' }
         ],
         tableTwoData: [
-            { roleWillRecruit: 'Chef', recruitmentYear: '2020' },
-            { roleWillRecruit: 'Waitress', recruitmentYear: '2021' },
+            { recruit_role: 'Chef', recruit_year: '2020' },
+            { recruit_role: 'Waitress', recruit_year: '2021' },
         ], 
     });
 
     useEffect(()=>{
         //componentDidMount 及 componentDidUpdate
-        const data = state.data
+        const data = state.tableTwoData
         window.VIC.aboEmp = data
 
         console.log(`更新後的 State ${JSON.stringify(data)}`)

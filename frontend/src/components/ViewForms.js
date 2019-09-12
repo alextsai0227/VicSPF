@@ -23,36 +23,18 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function createData(id, date, status) {
-    return { id, date, status };
+function createData(realId, showId, date, status) {
+    return { realId, showId, date, status };
 }
 
-function showApplication(row) {
-    console.log("data of" + row);
+function showApplication(evt) {
+    console.log(evt.target.parentNode.getAttribute('value'));
 }
 
 const rows = [
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
-    createData('0001', '2019/09/20', 'Unverified'),
-    createData('0002', '2019/09/01', 'Verifying'),
-    createData('0003', '2019/08/11', 'Completed'),
+    createData('a094rgj9', '0001', '2019/09/20', 'Unverified'),
+    createData('b09erwj9', '0002', '2019/09/01', 'Verifying'),
+    createData('cwre4rj9', '0003', '2019/08/11', 'Completed'),
 ];
 
 export default function ViewForms() {
@@ -72,12 +54,12 @@ export default function ViewForms() {
                                 <TableCell align="right">Status</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody>
+                        <TableBody onClick={showApplication}>
                             {rows.map(row => (
-                                <TableRow key={row.id} hover={true} onClick={showApplication(row)}>
-                                    <TableCell component="th" scope="row">{row.id}</TableCell>
-                                    <TableCell align="right">{row.date}</TableCell>
-                                    <TableCell align="right">{row.status}</TableCell>
+                                <TableRow value={row.realId} hover={true} >
+                                    <TableCell >{row.showId}</TableCell>
+                                    <TableCell  align="right" >{row.date}</TableCell>
+                                    <TableCell  align="right" >{row.status}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
