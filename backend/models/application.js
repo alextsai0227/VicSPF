@@ -2,11 +2,25 @@ const mongoose = require('mongoose');
 
 const applicationSchema = new mongoose.Schema({
 	supplier_id: {type: mongoose.Schema.Types.ObjectId, ref:'Supplier', required: true},
-	emp_recruit_abo_id: {type: mongoose.Schema.Types.ObjectId, ref:'EmpRecruitAbo'},
-	emp_curr_abo_id: {type: mongoose.Schema.Types.ObjectId, ref:'EmpCurrAbo'},
-	emp_cohorts_id: {type: mongoose.Schema.Types.ObjectId, ref:'EmpCohort'},
-	social_benefit_id: {type: mongoose.Schema.Types.ObjectId, ref:'SocialBenefit'},
+	emp_recruit_abo: [],
+	emp_curr_abo: [],
+	emp_cohorts: [],
+	social_benefit: [],
+	readiness_act: [],
+	status: {type: String, default: 'notprogress'},	
 });
+
+applicationSchema.methods.getData = function() {
+	return {
+	  _id: this._id,
+	  supplier_id: this.supplier_id,
+	  emp_recruit_abo: this.emp_recruit_abo,
+	  emp_curr_abo: this.emp_curr_abo,
+	  emp_cohorts:  this.emp_cohorts,
+	  social_benefit:  this.social_benefit,
+	  readiness_act:  this.readiness_act,
+	};
+};
 
 module.exports = {
 	model: mongoose.model('Application', applicationSchema),

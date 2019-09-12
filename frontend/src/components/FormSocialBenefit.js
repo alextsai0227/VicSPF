@@ -13,12 +13,12 @@ export default function FormSocialBenefit(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         columns: [
-            { title: 'Social Enterprise ', field: 'enterprise' },
-            { title: 'Services They Will Provide', field: 'service' },
+            { title: 'Social Enterprise ', field: 'company_name' },
+            { title: 'Services They Will Provide', field: 'service_name' },
             { title: 'Potential Value', field: 'value', type: 'numeric' }
         ],
         data: [
-            { enterprise: 'ABC company', service: 'some service', value: 10000 },
+            { company_name: 'ABC company', service_name: 'some service', value: 10000 },
         ],
     });
     
@@ -26,10 +26,10 @@ export default function FormSocialBenefit(props) {
         //componentDidMount 及 componentDidUpdate
         const data = state.data
         window.VIC.socialBenefit = data
-        console.log(`更新後的 State ${data[0].role}`)
+        console.log(`更新後的 State ${JSON.stringify(data)}`)
         //componentDidUpdate 及 componentWillUnmount
         return(()=>{
-            console.log(`更新前的 State ${data[0].role}`)
+            console.log(`更新前的 State ${JSON.stringify(data)}`)
         })
     
     })

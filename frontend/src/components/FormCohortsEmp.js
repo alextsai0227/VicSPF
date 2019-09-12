@@ -13,13 +13,13 @@ export default function FormCohortsEmp(props) {
     const classes = useStyles();
     const [state, setState] = useState({
         columns: [
-            { title: 'Group ', field: 'group' },
-            { title: 'Current Number Employed', field: 'currentNumEmp', type: 'numeric' },
+            { title: 'Group ', field: 'group_name' },
+            { title: 'Current Number Employed', field: 'curr_emp', type: 'numeric' },
             { title: 'Proposed Future Recruitment', field: 'futureNumEmp', type: 'numeric' }
         ],
         data: [
-            { group: 'Refugee', currentNumEmp: 2, futureNumEmp: 5 },
-            { group: 'Migrant', currentNumEmp: 0, futureNumEmp: 3 },
+            { group_name: 'Refugee', curr_emp: 2, future_emp: 5 },
+            { group_name: 'Migrant', curr_emp: 0, future_emp: 3 },
         ],
     });
 
@@ -27,10 +27,10 @@ export default function FormCohortsEmp(props) {
         //componentDidMount 及 componentDidUpdate
         const data = state.data
         window.VIC.cohortEmp = data
-        console.log(`更新後的 State ${data[0].role}`)
+        console.log(`更新後的 State ${JSON.stringify(data)}`)
         //componentDidUpdate 及 componentWillUnmount
         return(()=>{
-            console.log(`更新前的 State ${data[0].role}`)
+            console.log(`更新前的 State ${JSON.stringify(data)}`)
         })
     
     })

@@ -42,6 +42,7 @@ export default function FormStepper(props) {
 
     if (activeStep === 4){
       const data = {
+        'supplier_id': window.VIC.id,
         'aboEmp': window.VIC.aboEmp,
         'cohortEmp': window.VIC.cohortEmp,
         'jobReadiness': window.VIC.jobReadiness,
@@ -50,8 +51,8 @@ export default function FormStepper(props) {
       
       axios({
         method: 'post',
-        url: `http://localhost:8000/api/supplier/form`,
-        data: {form: data},
+        url: `http://localhost:8000/api/supplier/application`,
+        data: {data: data},
         headers: {
           'Content-Type': 'application/json',
         },
