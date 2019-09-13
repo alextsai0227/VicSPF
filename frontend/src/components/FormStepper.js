@@ -36,7 +36,13 @@ export default function FormStepper(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-  
+  console.log("FormStepper")
+  // init global variable for submit new form
+  window.VIC.aboEmp = window.VIC.aboEmp || []
+  window.VIC.aboCur = window.VIC.aboCur || []
+  window.VIC.cohortEmp = window.VIC.cohortEmp || []
+  window.VIC.jobReadiness = window.VIC.jobReadiness || []
+  window.VIC.socialBenefit = window.VIC.socialBenefit || []
   function handleNext() {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
 

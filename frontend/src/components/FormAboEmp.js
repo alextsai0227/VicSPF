@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 
 // React related package
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 
 const useStyles = makeStyles(theme => ({
@@ -19,33 +19,34 @@ const useStyles = makeStyles(theme => ({
 
 export default function FormAboEmp(props) {
     const classes = useStyles();
-    const [state, setState] = React.useState({
-        tableOneColumns: [
-            { title: 'Existing Aboriginal Employee Roles ', field: 'emp_role'},
-            { title: 'Years Recruited', field: 'emp_year', type: 'numeric' }
-        ],
-        tableOneData: [
-            { emp_role: 'Waiter', emp_year: '1' },
-            { emp_role: 'Accountant', emp_year: '4' },
-        ],
-        tableTwoColumns: [
-            { recruit_role: 'Aboriginal Roles To Be Recruited ', field: 'recruit_year' },
-            { recruit_role: 'Proposed Recruitment Year', field: 'recruit_year', type: 'numeric' }
-        ],
-        tableTwoData: [
-            { recruit_role: 'Chef', recruit_year: '2020' },
-            { recruit_role: 'Waitress', recruit_year: '2021' },
-        ],
+    const tableOneColumns = [
+        { title: 'Existing Aboriginal Employee Roles ', field: 'emp_role'},
+        { title: 'Years Recruited', field: 'emp_year', type: 'numeric' }
+    ]
+    const tableTwoColumns = [
+        { title: 'Aboriginal Roles To Be Recruited ', field: 'recruit_role' },
+        { title: 'Proposed Recruitment Year', field: 'recruit_year', type: 'numeric' }
+    ]
+    
+    const [oneData, setOneData] = React.useState({
+        data: window.VIC.aboCur
+    });
+    
+    const [twoData, setTwoData] = React.useState({
+        data: window.VIC.aboEmp
     });
 
     useEffect(() => {
         //componentDidMount 及 componentDidUpdate
-        window.VIC.aboEmp = state.tableTwoData
-        window.VIC.aboCur = state.tableOneData
-
+        window.VIC.aboEmp = twoData.data
+        window.VIC.aboCur = oneData.data
+        console.log(`更新後的 State`)
         //componentDidUpdate 及 componentWillUnmount
         return(()=>{
-
+            console.log(window.VIC)
+            // oneData.data = window.VIC.aboCur
+            // twoData.data = window.VIC.aboEmp
+            console.log(`更新前的 State `)
         })
 
     })
@@ -58,34 +59,34 @@ export default function FormAboEmp(props) {
                     <MaterialTable
                         title="Existing Employment"
                         className={classes.table}
-                        columns={state.tableOneColumns}
-                        data={state.tableOneData}
+                        columns={tableOneColumns}
+                        data={oneData.data}
                         editable={{
                             onRowAdd: newData =>
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...oneData.data];
                                         data.push(newData);
-                                        setState({ ...state, data });
+                                        setOneData({ ...oneData, data });
                                     }, 600);
                                 }),
                             onRowUpdate: (newData, oldData) =>
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...oneData.data];
                                         data[data.indexOf(oldData)] = newData;
-                                        setState({ ...state, data });
+                                        setOneData({ ...oneData, data });
                                     }, 600);
                                 }),
                             onRowDelete: oldData =>
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...oneData.data];
                                         data.splice(data.indexOf(oldData), 1);
-                                        setState({ ...state, data });
+                                        setOneData({ ...oneData, data });
                                     }, 600);
                                 }),
                         }}
@@ -96,34 +97,34 @@ export default function FormAboEmp(props) {
                     <MaterialTable
                         title="Future Employment"
                         className={classes.table}
-                        columns={state.tableTwoColumns}
-                        data={state.tableTwoData}
+                        columns={tableTwoColumns}
+                        data={twoData.data}
                         editable={{
                             onRowAdd: newData =>
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...twoData.data];
                                         data.push(newData);
-                                        setState({ ...state, data });
+                                        setTwoData({ ...twoData, data });
                                     }, 600);
                                 }),
                             onRowUpdate: (newData, oldData) =>
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...twoData.data];
                                         data[data.indexOf(oldData)] = newData;
-                                        setState({ ...state, data });
+                                        setTwoData({ ...twoData, data });
                                     }, 600);
                                 }),
                             onRowDelete: oldData =>
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...twoData.data];
                                         data.splice(data.indexOf(oldData), 1);
-                                        setState({ ...state, data });
+                                        setTwoData({ ...twoData, data });
                                     }, 600);
                                 }),
                         }}

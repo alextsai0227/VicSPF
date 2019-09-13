@@ -23,10 +23,7 @@ export default function FormJobReadiness(props) {
             { title: 'Number of People', field: 'num_people', type: 'numeric' },
             { title: 'Number of Hours', field: 'num_hour', type: 'numeric' }
         ],
-        data: [
-            { group_name: 'Disengaged Youth', num_people: 12, num_hour: 50 },
-            { group_name: 'Single parents', num_people: 20, num_hour: 30 },
-        ],
+        data: window.VIC.jobReadiness,
     });
 
     useEffect(() => {

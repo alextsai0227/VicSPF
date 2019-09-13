@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 
 // React related package
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -22,9 +22,7 @@ export default function FormSocialBenefit(props) {
             { title: 'Services They Will Provide', field: 'service_name' },
             { title: 'Potential Value', field: 'value', type: 'numeric' }
         ],
-        data: [
-            { company_name: 'ABC company', service_name: 'some service', value: 10000 },
-        ],
+        data: window.VIC.socialBenefit,
     });
 
     useEffect(() => {

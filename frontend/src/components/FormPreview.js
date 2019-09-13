@@ -22,25 +22,11 @@ const useStyles = makeStyles(theme => ({
 
 export default function FormPreview(props) {
   const classes = useStyles();
-  const abo_existing_data = [
-    { recruit_role: 'Waiter', recruit_year: '1' },
-    { recruit_role: 'Accountant', recruit_year: '4' },
-  ];
-  const abo_future_data = [
-    { recruit_role: 'Chef', recruit_year: '2020' },
-    { recruit_role: 'Waitress', recruit_year: '2021' },
-  ];
-  const cohorts_data = [
-    { group_name: 'Refugee', curr_emp: 2, future_emp: 5 },
-    { group_name: 'Migrant', curr_emp: 0, future_emp: 3 },
-  ];
-  const social_benefit_data = [
-    { company_name: 'ABC company', service_name: 'some service', value: 10000 },
-  ];
-  const job_readiness_data = [
-    { group_name: 'Disengaged Youth', num_people: 12, num_hour: 50 },
-    { group_name: 'Single parents', num_people: 20, num_hour: 30 },
-  ];
+  const abo_existing_data = window.VIC.aboCur
+  const abo_future_data = window.VIC.aboEmp
+  const cohorts_data = window.VIC.cohortEmp
+  const social_benefit_data = window.VIC.socialBenefit
+  const job_readiness_data = window.VIC.jobReadiness
 
   return (
     <div className={classes.root}>
@@ -61,8 +47,8 @@ export default function FormPreview(props) {
                         <TableBody >
                             {abo_existing_data.map(row => (
                                 <TableRow >
-                                    <TableCell >{row.recruit_role}</TableCell>
-                                    <TableCell align="right" >{row.recruit_year}</TableCell>
+                                    <TableCell >{row.emp_role}</TableCell>
+                                    <TableCell align="right" >{row.emp_year}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
