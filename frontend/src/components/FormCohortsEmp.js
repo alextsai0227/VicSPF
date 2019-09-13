@@ -7,26 +7,14 @@ import Container from '@material-ui/core/Container';
 // React related package
 import React, { useState, useEffect } from 'react';
 
-const useStyles = makeStyles(theme => ({
-    // root: {
-    //     width: '100%',
-    //     marginTop: theme.spacing(3),
-    //     overflowX: 'auto',
-    // },
-}));
-
 export default function FormCohortsEmp(props) {
-    const classes = useStyles();
     const [state, setState] = useState({
         columns: [
             { title: 'Group ', field: 'group_name' },
             { title: 'Current Number Employed', field: 'curr_emp', type: 'numeric' },
-            { title: 'Proposed Future Recruitment', field: 'futureNumEmp', type: 'numeric' }
+            { title: 'Proposed Future Recruitment', field: 'future_emp', type: 'numeric' }
         ],
-        data: [
-            { group_name: 'Refugee', curr_emp: 2, future_emp: 5 },
-            { group_name: 'Migrant', curr_emp: 0, future_emp: 3 },
-        ],
+        data: window.VIC.cohortEmp,
     });
 
     useEffect(() => {
@@ -42,12 +30,11 @@ export default function FormCohortsEmp(props) {
     })
 
     return (
-        <div className={classes.root}>
+        <div>
             <h1>Cohorts Employment</h1>
             <Container component="main" maxWidth="lg">
-                <Paper className={classes.root}>
+                <Paper>
                     <MaterialTable
-                        className={classes.table}
                         columns={state.columns}
                         data={state.data}
                         editable={{

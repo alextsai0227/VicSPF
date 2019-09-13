@@ -31,7 +31,8 @@ const rows = [
 
 export default function ViewForms(props) {
     const classes = useStyles();
-
+    // conditions if (props.applications) use props.applications, if not use state
+    const applications = props.location.state.applications
     console.log("===========")
     console.log(props.location.state)
 
@@ -60,10 +61,10 @@ export default function ViewForms(props) {
                             </TableRow>
                         </TableHead>
                         <TableBody onClick={showApplicationDetail}>
-                            {rows.map(row => (
-                                <TableRow value={row.realId} hover={true} >
-                                    <TableCell >{row.showId}</TableCell>
-                                    <TableCell align="right" >{row.date}</TableCell>
+                            {applications.map((row, index) => (
+                                <TableRow value={row._id} hover={true} >
+                                    <TableCell >{(index + 1).toString().padStart(3,'0')}</TableCell>
+                                    <TableCell align="right" >{row.created_date.slice(0,10)}</TableCell>
                                     <TableCell align="right" >{row.status}</TableCell>
                                 </TableRow>
                             ))}

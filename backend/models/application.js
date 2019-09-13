@@ -7,7 +7,8 @@ const applicationSchema = new mongoose.Schema({
 	emp_cohorts: [],
 	social_benefit: [],
 	readiness_act: [],
-	status: {type: String, default: 'notprogress'},	
+	status: {type: String, default: 'notprogress'},
+	created_date: Date
 });
 
 applicationSchema.methods.getData = function() {
