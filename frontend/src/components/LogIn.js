@@ -41,7 +41,7 @@ export default function LogIn(props) {
                 saveToken(res['data']['user'])
                 // Todo: should navigate to supplier's page
                 const { user } = res['data']
-                const data = JSON.stringify(user);
+                const data = user
                 setSupplierData(data)
                 const path = {
                     pathname: '/sup-profile',

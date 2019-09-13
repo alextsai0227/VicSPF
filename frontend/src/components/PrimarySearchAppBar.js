@@ -51,7 +51,7 @@ function PrimarySearchAppBar(props) {
       method: 'get',
       url: `http://localhost:8000/api/supplier/applications/${window.localStorage.u_id}`
     }).then(res => {
-        const data = JSON.parse(props.location.state)
+        const data = props.location.state
         data.applications = res.data.applications
         const path = {
           pathname: '/viewforms',

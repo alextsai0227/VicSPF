@@ -25,7 +25,7 @@ export default function FormSupplierDetail(props) {
 
   if (props.location && props.location.state){
     //componentDidMount 及 componentDidUpdate
-    const data = JSON.parse(props.location.state)
+    const data = props.location.state
     if (data.company_name) {
       r_companyName = data.company_name
     } 

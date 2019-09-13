@@ -3,7 +3,7 @@ export const saveToken = (loginUser) => {
 };
 
 export const setSupplierData = (data) => {
-    data = JSON.parse(data)
+    data = data
     window.VIC.company_name = data.company_name
     window.VIC.phone = data.phone
     window.VIC.street = data.street

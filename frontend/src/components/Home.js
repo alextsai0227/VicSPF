@@ -28,7 +28,7 @@ export class Home extends Component {
 
                 const path = {
                     pathname: '/sup-profile',
-                    state: JSON.stringify(data),
+                    state: data,
                 }
                 // console.log(this.props)
                 this.props.history.push(path)
