@@ -35,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ViewForms(props) {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
     const application = props.location.state.application
     const abo_existing_data = application.emp_curr_abo
     const abo_future_data = application.emp_recruit_abo
