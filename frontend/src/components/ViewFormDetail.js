@@ -9,6 +9,11 @@ import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 // React related package
 import React from 'react';
@@ -30,6 +35,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function ViewForms(props) {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
     const appShowId = "001"; // CHANGE THIS
     const abo_existing_data = [
         { recruit_role: 'Waiter', recruit_year: '1' },
@@ -57,8 +63,11 @@ export default function ViewForms(props) {
         }
         props.history.push(path)
     }
-    function handleWithdraw() {
-        alert("Are you sure you want to withdraw this application? (Yes)(No)");
+    function showDialog() {
+        setOpen(true);
+    }
+    function closeDialog() {
+        setOpen(false);
     }
 
     return (
@@ -185,9 +194,18 @@ export default function ViewForms(props) {
                 <br /><br />
                 <div>
                     <Button onClick={handleBack} className={classes.button} >Back</Button>
-                    <Button variant="contained" color="secondary" onClick={handleWithdraw} className={classes.button}>Withdraw</Button>
+                    <Button variant="contained" color="secondary" onClick={showDialog} className={classes.button}>Withdraw</Button>
                 </div>
-
+                <Dialog open={open} onClose={closeDialog}>
+                    <DialogTitle id="alert-dialog-title">{"Withdraw application?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">Are you sure you want to withdraw this application?</DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={closeDialog} color="primary">Withdraw</Button>
+                        <Button onClick={closeDialog} color="primary" autoFocus>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
             </Container>
         </>
     );

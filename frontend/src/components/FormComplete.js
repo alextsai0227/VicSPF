@@ -1,19 +1,38 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import React from 'react';
+import Alert from 'react-bootstrap/Alert'
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
-class Complete extends Component {
-  render() {
-    return (
-      <MuiThemeProvider>
-        <React.Fragment>
-          <h2>Submitted Successfully!</h2>
-          <p>You can track the progress in your profile.</p>
-          <Link to='/profile'>Back to profile</Link>
-        </React.Fragment>
-      </MuiThemeProvider>
-    );
+const useStyles = makeStyles(theme => ({
+  title: {
+    fontWeight: '900',
   }
-}
+}));
 
-export default Complete;
+export default function Complete(props) {
+  const classes = useStyles();
+  let data = {}
+  axios({
+    method: 'get',
+    url: `http://localhost:8000/api/supplier/applications/${window.localStorage.u_id}`
+  }).then(res => {
+    data = JSON.parse(res.data.applications)
+    console.log(data)
+  }).catch((err) => {
+      
+  });
+  // Fetch all applications from window.localStorage.u_id
+
+  return (
+    <Container component="main" maxWidth="lg">
+      <Alert variant="success">
+        <Alert.Heading className={classes.title}> Submitted Successfully!</Alert.Heading>
+        <br />
+                                                      {/* add the props of applications to viewform */}
+        <h6>You can track your application status <Alert.Link href="/viewforms">here</Alert.Link>.</h6>
+        <br />
+      </Alert>
+    </Container>
+  );
+}

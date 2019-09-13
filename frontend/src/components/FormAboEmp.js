@@ -65,7 +65,7 @@ export default function FormAboEmp(props) {
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...state.tableOneData];
                                         data.push(newData);
                                         setState({ ...state, data });
                                     }, 600);
@@ -74,7 +74,7 @@ export default function FormAboEmp(props) {
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...state.tableOneData];
                                         data[data.indexOf(oldData)] = newData;
                                         setState({ ...state, data });
                                     }, 600);
@@ -83,7 +83,7 @@ export default function FormAboEmp(props) {
                                 new Promise(resolve => {
                                     setTimeout(() => {
                                         resolve();
-                                        const data = [...state.data];
+                                        const data = [...state.tableOneData];
                                         data.splice(data.indexOf(oldData), 1);
                                         setState({ ...state, data });
                                     }, 600);

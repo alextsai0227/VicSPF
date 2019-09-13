@@ -1,11 +1,12 @@
-import React from 'react';
+// Material UI
 import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
+// React related package
 import FormAboEmp from './FormAboEmp';
 import FormCohortsEmp from './FormCohortsEmp';
 import FormSocialBenefit from './FormSocialBenefit';
@@ -13,6 +14,7 @@ import FormJobReadiness from './FormJobReadiness';
 import FormPreview from './FormPreview';
 import FormComplete from './FormComplete';
 import NaviBar from './PrimarySearchAppBar';
+import React from 'react';
 import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
@@ -24,7 +26,20 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   },
   buttons: {
-    // marginBottom: theme.spacing(1)
+    width: '100%',
+    position: 'fixed',
+    bottom: '10px',
+    textAlign: 'center',
+    // zIndex: '100000000,'
+  },
+  backButton: {
+    backgroundColor: 'white',
+    marginLeft: '25px',
+    marginRight: '25px',
+  },
+  nextButton: {
+    marginLeft: '25px',
+    marginRight: '25px',
   },
   instructions: {
     marginTop: theme.spacing(1),
@@ -36,11 +51,11 @@ export default function FormStepper(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
-  
+
   function handleNext() {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
 
-    if (activeStep === 4){
+    if (activeStep === 4) {
       const data = {
         'supplier_id': window.localStorage.u_id,
         'aboEmp': window.VIC.aboEmp,
@@ -49,11 +64,11 @@ export default function FormStepper(props) {
         'jobReadiness': window.VIC.jobReadiness,
         'socialBenefit': window.VIC.socialBenefit
       };
-      
+
       axios({
         method: 'post',
         url: `http://localhost:8000/api/supplier/application/${window.localStorage.u_id}`,
-        data: {data: data},
+        data: { data: data },
         headers: {
           'Content-Type': 'application/json',
         },
@@ -65,6 +80,13 @@ export default function FormStepper(props) {
           console.log(err)
         });
     }
+    if (activeStep === 5) {
+      const path = {
+        pathname: '/viewforms',
+        state: props.location.state,
+      }
+      props.history.push(path)
+    }
   }
 
   function handleBack() {
@@ -74,30 +96,30 @@ export default function FormStepper(props) {
   function getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <FormAboEmp props={props}/> ;
+        return <FormAboEmp props={props} />;
       case 1:
-        return <FormCohortsEmp props={props}/> ;
+        return <FormCohortsEmp props={props} />;
       case 2:
-        return <FormSocialBenefit props={props}/> ;
+        return <FormSocialBenefit props={props} />;
       case 3:
-        return <FormJobReadiness props={props}/> ;
+        return <FormJobReadiness props={props} />;
       case 4:
-        return <FormPreview props={props}/> ;
+        return <FormPreview props={props} />;
       case 5:
-        return <FormComplete props={props}/> ;
+        return <FormComplete props={props} />;
     }
   }
 
   function getSteps() {
-    return ['Aboriginal Employment', 'Cohorts Employment', 
-            'Verified Social Benefits', 'Job Readiness Activities', 'Preview', 'Complete'];
+    return ['Aboriginal Employment', 'Cohorts Employment',
+      'Verified Social Benefits', 'Job Readiness Activities', 'Preview', 'Complete'];
   }
-  function sitchButton(){
-    if(activeStep === steps.length - 1){
+  function sitchButton() {
+    if (activeStep === steps.length - 1) {
       return 'Finish'
-    }else if(activeStep === steps.length - 2){
+    } else if (activeStep === steps.length - 2) {
       return 'Submit'
-    }else{
+    } else {
       return 'Next'
     }
   }
@@ -114,28 +136,25 @@ export default function FormStepper(props) {
         </Stepper>
         <div>
           {activeStep === steps.length ? (
-            <div>
-              
-              {/* <Typography className={classes.instructions}>Submitted Successfully! <br /> You can track the progress here.</Typography>
-              <Link to='/profile'>Back to profile</Link> */}
-            </div>
+            <div />
           ) : (
-            <div>
-              <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-              <div className={classes.buttons}>
-                <Button
-                  disabled={activeStep === 0 || activeStep === 5 }
-                  onClick={handleBack}
-                  className={classes.backButton}
-                >
-                  Back
+              <div>
+                <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                <br /><br />
+                <div className={classes.buttons}>
+                  <Button
+                    disabled={activeStep === 0 || activeStep === 5}
+                    onClick={handleBack}
+                    className={classes.backButton}
+                  >
+                    Back
                 </Button>
-                <Button variant="contained" color="primary" onClick={handleNext}>
-                  {sitchButton()}
-                </Button>
+                  <Button variant="contained" color="primary" onClick={handleNext} className={classes.nextButton}>
+                    {sitchButton()}
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
       </div>
     </div>

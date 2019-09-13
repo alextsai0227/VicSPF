@@ -48,6 +48,7 @@ export default function ViewForms(props) {
         <>
             <NaviBar />
             <Container component="main" maxWidth="md">
+                <br />
                 <h1> Application History </h1>
                 <Paper className={classes.root}>
                     <Table className={classes.table} >
