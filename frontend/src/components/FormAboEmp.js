@@ -15,12 +15,12 @@ export default function FormAboEmp(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({
         tableOneColumns: [
-            { title: 'Existing Aboriginal Employee Roles ', field: 'recruit_role'},
-            { title: 'Years Recruited', field: 'recruit_year', type: 'numeric' }
+            { title: 'Existing Aboriginal Employee Roles ', field: 'emp_role'},
+            { title: 'Years Recruited', field: 'emp_year', type: 'numeric' }
         ],
         tableOneData: [
-            { recruit_role: 'Waiter', recruit_year: '1' },
-            { recruit_role: 'Accountant', recruit_year: '4' },
+            { emp_role: 'Waiter', emp_year: '1' },
+            { emp_role: 'Accountant', emp_year: '4' },
         ],
         tableTwoColumns: [
             { recruit_role: 'Aboriginal Roles To Be Recruited ', field: 'recruit_year' },
@@ -34,13 +34,11 @@ export default function FormAboEmp(props) {
 
     useEffect(()=>{
         //componentDidMount 及 componentDidUpdate
-        const data = state.tableTwoData
-        window.VIC.aboEmp = data
+        window.VIC.aboEmp = state.tableTwoData
+        window.VIC.aboCur = state.tableOneData
 
-        console.log(`更新後的 State ${JSON.stringify(data)}`)
         //componentDidUpdate 及 componentWillUnmount
         return(()=>{
-            console.log(`更新前的 State ${JSON.stringify(data)}`)
         })
     
     })

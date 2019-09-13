@@ -4,10 +4,10 @@ const auth = require('../auth');
 const Supplier = require('../../models/supplier');
 const Application = require('../../models/application');
 const EmpCohort= require('../../models/emp_cohorts');
-// const EmpCurrAbo= require('../../models/emp_curr_abo');
 const EmpRecruitAbo= require('../../models/emp_recruit_abo');
 const ReadinessAct= require('../../models/readiness_act');
 const SocialBenefit = require('../../models/social_benefit');
+const AboCur = require('../../models/emp_curr_abo');
 
 // ========================Login/Signup route========================
 //POST new user route (optional, everyone has access)
@@ -116,12 +116,14 @@ router.put('/user/:id', auth.optional, (req, res) => {
 // ========================application route========================
 
 //POST application route
-router.post('/application', auth.optional, (req, res, next) => {
+router.post('/application/:id', auth.optional, (req, res, next) => {
   const { body: { data } } = req;
+
   let empCohorts = data.cohortEmp
   let empRecruitAbos = data.aboEmp
   let readinessActs = data.jobReadiness
   let socialBenefits = data.socialBenefit
+  let aboCurs = data.aboCur
   empCohorts.forEach(function (empCohort, index) {
     const e = new EmpCohort.model(empCohort);
     empCohorts[index] = e  
@@ -138,6 +140,10 @@ router.post('/application', auth.optional, (req, res, next) => {
     const e = new SocialBenefit.model(socialBenefit);
     socialBenefits[index] = e  
   });
+  aboCurs.forEach(function (aboCur, index) {
+    const e = new AboCur.model(aboCur);
+    aboCurs[index] = e  
+  });
 
   const application = new Application.model();
   application.supplier_id = data.supplier_id
@@ -145,17 +151,20 @@ router.post('/application', auth.optional, (req, res, next) => {
   application.emp_cohorts = empCohorts
   application.social_benefit = socialBenefits
   application.readiness_act = readinessActs
+  application.emp_curr_abo = aboCurs
+
+
   try {
     EmpCohort.model.insertMany(empCohorts);
     EmpRecruitAbo.model.insertMany(empRecruitAbos);
     ReadinessAct.model.insertMany(readinessActs);
     SocialBenefit.model.insertMany(socialBenefits);
-    // EmpCurrAbo.model.insertMany(application.);
-    application.save()
-    return res.json({ application: application });
+    AboCur.model.insertMany(aboCurs);
+    application.save();
+    return res.sendStatus(201);
   } catch (e) {
-    console.log(e);
-    return res.sendStatus(500);
+    console.log(e.response);
+    return res.send(e.response);
   }
 });
 
