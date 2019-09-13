@@ -77,7 +77,8 @@ function PrimarySearchAppBar(props) {
   }
 
   function handleLogout(evt){
-    
+    localStorage.removeItem('token');
+    props.history.push('/login')
   }
 
   function handleViewForm(evt){

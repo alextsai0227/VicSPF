@@ -42,8 +42,9 @@ export default function FormStepper(props) {
 
     if (activeStep === 4){
       const data = {
-        'supplier_id': window.VIC.id,
+        'supplier_id': window.localStorage.u_id,
         'aboEmp': window.VIC.aboEmp,
+        'aboCur': window.VIC.aboCur,
         'cohortEmp': window.VIC.cohortEmp,
         'jobReadiness': window.VIC.jobReadiness,
         'socialBenefit': window.VIC.socialBenefit
@@ -51,7 +52,7 @@ export default function FormStepper(props) {
       
       axios({
         method: 'post',
-        url: `http://localhost:8000/api/supplier/application`,
+        url: `http://localhost:8000/api/supplier/application/${window.localStorage.u_id}`,
         data: {data: data},
         headers: {
           'Content-Type': 'application/json',
