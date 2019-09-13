@@ -169,7 +169,7 @@ router.post('/application/:id', auth.optional, (req, res, next) => {
   }
 });
 
-//GET application route
+//GET application route by application id
 router.get('/application/:id', auth.optional, (req, res) => {
   return Application.model.findById(req.params.id)
     .then((application) => {
@@ -178,6 +178,19 @@ router.get('/application/:id', auth.optional, (req, res) => {
       }
 
       return res.json({ application: application.getData()});
+    });
+  
+});
+
+//GET applications route by user id 
+router.get('/applications/:id', auth.optional, (req, res) => {
+  return Application.model.find({supplier_id: req.params.id})
+    .then((applications) => {
+      if(!applications) {
+        return res.sendStatus(400);
+      }
+
+      return res.json({ applications: applications});
     });
   
 });

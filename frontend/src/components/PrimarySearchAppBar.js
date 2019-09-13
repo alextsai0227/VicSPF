@@ -16,6 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import ExitToApp from '@material-ui/icons/ExitToApp';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { withRouter } from 'react-router-dom';
+import axios from 'axios'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -82,12 +83,22 @@ function PrimarySearchAppBar(props) {
   }
 
   function handleViewForm(evt){
-    // Todo: redirect to "/ViewForms"
-    const path = {
-      pathname: '/viewforms',
-      state: props.location.state,
-    }
-    props.history.push(path)
+    axios({
+      method: 'get',
+      url: `http://localhost:8000/api/supplier/applications/${window.localStorage.u_id}`
+    }).then(res => {
+        const data = JSON.parse(props.location.state)
+        data.applications = res.data.applications
+        const path = {
+          pathname: '/viewforms',
+          state: data,
+        }
+        props.history.push(path)
+    }).catch(err => {
+        console.log(err)
+    });
+    
+
 
   }
 
