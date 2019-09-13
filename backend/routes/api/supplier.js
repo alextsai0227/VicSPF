@@ -88,7 +88,7 @@ router.get('/current', auth.required, (req, res, next) => {
   return Supplier.model.findById(id)
     .then((user) => {
       if(!user) {
-        return res.sendStatus(400);
+        return res.sendStatus(401);
       }
 
       return res.json({ user: user.getData()});
