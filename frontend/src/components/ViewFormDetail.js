@@ -8,44 +8,64 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 // React related package
 import React from 'react';
+import NaviBar from './PrimarySearchAppBar';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    // width: '100%',
-    // marginTop: theme.spacing(3),
-    // overflowX: 'auto',
-  },
+    root: {
+        width: '100%',
+        marginTop: theme.spacing(3),
+        overflowX: 'auto',
+    },
+    table: {
+        minWidth: 650,
+    },
+    button: {
+        marginLeft: '50px',
+    },
 }));
 
-export default function FormPreview(props) {
-  const classes = useStyles();
-  const abo_existing_data = [
-    { recruit_role: 'Waiter', recruit_year: '1' },
-    { recruit_role: 'Accountant', recruit_year: '4' },
-  ];
-  const abo_future_data = [
-    { recruit_role: 'Chef', recruit_year: '2020' },
-    { recruit_role: 'Waitress', recruit_year: '2021' },
-  ];
-  const cohorts_data = [
-    { group_name: 'Refugee', curr_emp: 2, future_emp: 5 },
-    { group_name: 'Migrant', curr_emp: 0, future_emp: 3 },
-  ];
-  const social_benefit_data = [
-    { company_name: 'ABC company', service_name: 'some service', value: 10000 },
-  ];
-  const job_readiness_data = [
-    { group_name: 'Disengaged Youth', num_people: 12, num_hour: 50 },
-    { group_name: 'Single parents', num_people: 20, num_hour: 30 },
-  ];
+export default function ViewForms(props) {
+    const classes = useStyles();
+    const appShowId = "001"; // CHANGE THIS
+    const abo_existing_data = [
+        { recruit_role: 'Waiter', recruit_year: '1' },
+        { recruit_role: 'Accountant', recruit_year: '4' },
+    ];
+    const abo_future_data = [
+        { recruit_role: 'Chef', recruit_year: '2020' },
+        { recruit_role: 'Waitress', recruit_year: '2021' },
+    ];
+    const cohorts_data = [
+        { group_name: 'Refugee', curr_emp: 2, future_emp: 5 },
+        { group_name: 'Migrant', curr_emp: 0, future_emp: 3 },
+    ];
+    const social_benefit_data = [
+        { company_name: 'ABC company', service_name: 'some service', value: 10000 },
+    ];
+    const job_readiness_data = [
+        { group_name: 'Disengaged Youth', num_people: 12, num_hour: 50 },
+        { group_name: 'Single parents', num_people: 20, num_hour: 30 },
+    ];
+    function handleBack() {
+        const path = {
+            pathname: '/viewforms',
+            state: props.location.state,
+        }
+        props.history.push(path)
+    }
+    function handleWithdraw() {
+        alert("Are you sure you want to withdraw this application? (Yes)(No)");
+    }
 
-  return (
-    <div className={classes.root}>
-      <h1>Preview</h1>
-      <Container component="main" maxWidth="lg">
+    return (
+        <>
+            <NaviBar />
+            <Container component="main" maxWidth="md">
+                <h1> Application No.{appShowId} </h1>
                 <br />
                 <Typography component="h2" variant="h5" align="left">
                     Aboriginal Existing Employment
@@ -163,10 +183,12 @@ export default function FormPreview(props) {
                     </Table>
                 </Paper>
                 <br /><br />
+                <div>
+                    <Button onClick={handleBack} className={classes.button} >Back</Button>
+                    <Button variant="contained" color="secondary" onClick={handleWithdraw} className={classes.button}>Withdraw</Button>
+                </div>
+
             </Container>
-    </div>
-  );
+        </>
+    );
 }
-
-
-

@@ -23,22 +23,26 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function createData(realId, showId, date, status) {
-    return { realId, showId, date, status };
-}
-
-function showApplication(evt) {
-    console.log(evt.target.parentNode.getAttribute('value'));
-}
-
 const rows = [
-    createData('a094rgj9', '0001', '2019/09/20', 'Unverified'),
-    createData('b09erwj9', '0002', '2019/09/01', 'Verifying'),
-    createData('cwre4rj9', '0003', '2019/08/11', 'Completed'),
-];
+    { realId: "a094rgj9", showId: "0001", date: "2019/09/20", status: "Unverified" },
+    { realId: "b09erwj9", showId: "0002", date: "2019/09/01", status: "Verifying" },
+    { realId: "cwre4rj9", showId: "0003", date: "2019/08/11", status: "Completed" },
+]
 
-export default function ViewForms() {
+export default function ViewForms(props) {
     const classes = useStyles();
+
+    console.log("===========")
+    console.log(props.location.state)
+
+    function showApplicationDetail(evt) {
+        console.log(evt.target.parentNode.getAttribute('value'));
+        const path = {
+            pathname: '/viewformdetail',
+            state: props.location.state,
+        }
+        props.history.push(path)
+    }
 
     return (
         <>
@@ -54,12 +58,12 @@ export default function ViewForms() {
                                 <TableCell align="right">Status</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody onClick={showApplication}>
+                        <TableBody onClick={showApplicationDetail}>
                             {rows.map(row => (
                                 <TableRow value={row.realId} hover={true} >
                                     <TableCell >{row.showId}</TableCell>
-                                    <TableCell  align="right" >{row.date}</TableCell>
-                                    <TableCell  align="right" >{row.status}</TableCell>
+                                    <TableCell align="right" >{row.date}</TableCell>
+                                    <TableCell align="right" >{row.status}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

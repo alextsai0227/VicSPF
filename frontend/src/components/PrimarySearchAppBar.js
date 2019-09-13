@@ -82,6 +82,12 @@ function PrimarySearchAppBar(props) {
 
   function handleViewForm(evt){
     // Todo: redirect to "/ViewForms"
+    const path = {
+      pathname: '/viewforms',
+      state: props.location.state,
+    }
+    props.history.push(path)
+
   }
 
   const menuId = 'primary-search-account-menu';
