@@ -65,8 +65,30 @@ export default function FormSupplierDetail(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    // alert(`Company Name: ${companyName} ABN: ${abn} email: ${email} phone: ${phone} 
-    //        street: ${street} suburb: ${suburb} state: ${state} password: ${password}`);
+    if (readOnly){
+      const data = {
+        'phone': phone,
+        'street': street,
+        'suburb': suburb,
+        'state': state,
+        'abn': abn,
+        'company_name': companyName
+      };
+      axios({
+        method: 'put',
+        url: `http://localhost:8000/api/supplier/user/${window.localStorage.u_id}`,
+        data: {data: data},
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }).then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        });
+    }
+
   }
 
   useEffect(()=>{
@@ -252,7 +274,6 @@ export default function FormSupplierDetail(props) {
                             value={state}
                             onChange={updateState}
                             input={<Input name="state" id="state" />}
-                            defaultValue="VIC"
                           >
                           <MenuItem value=""></MenuItem>
                           <MenuItem value="NSW">NSW</MenuItem>

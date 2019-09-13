@@ -95,6 +95,24 @@ router.get('/current', auth.required, (req, res, next) => {
     });
 });
 
+//PUT user route
+router.put('/user/:id', auth.optional, (req, res) => {
+  const { body: { data } } = req;
+
+  return Supplier.model.updateOne({"_id": req.params.id}, 
+  {$set:{"phone": data.phone, "street": data.street, "suburb": data.suburb, "state": data.state,
+          "abn": data.abn, "company_name": data.company_name}
+  }).then((result) => {
+      console.log(result)
+
+      return res.json({ result: result});
+    }).catch((err) => {
+      console.log(err)
+    });
+  
+});
+
+
 // ========================application route========================
 
 //POST application route

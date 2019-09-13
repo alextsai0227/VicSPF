@@ -10,5 +10,5 @@ export const setSupplierData = (data) => {
     window.VIC.suburb = data.suburb
     window.VIC.state = data.state
     window.VIC.abn = data.abn
-    window.VIC.id = data._id
+    window.localStorage.u_id = data._id
 };
