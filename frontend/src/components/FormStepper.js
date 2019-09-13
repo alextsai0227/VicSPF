@@ -55,7 +55,7 @@ export default function FormStepper(props) {
         'jobReadiness': window.VIC.jobReadiness,
         'socialBenefit': window.VIC.socialBenefit
       };
-      submited, so reset variable
+      // submited, so reset variable
       window.VIC.aboEmp = []
       window.VIC.aboCur = []
       window.VIC.cohortEmp = []
