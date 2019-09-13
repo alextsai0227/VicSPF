@@ -47,8 +47,34 @@ export default function FormSupplierDetail(props) {
     }
     if (data.state){
       r_state = data.state
-    }
-    
+    }   
+  }else{
+    axios({
+      method: 'get',
+      url: `http://localhost:8000/api/supplier/current`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${window.localStorage.token}`
+      },
+    }).then(res => {
+      r_companyName = res.data.user.company_name
+      r_abn = res.data.user.abn
+      r_email = res.data.user.email
+      r_phone = res.data.user.phone
+      r_street = res.data.user.street
+      r_suburb = res.data.user.suburb
+      r_state = res.data.user.state
+      updateCompanyName(r_companyName)
+      updateEmail(r_email)
+      updateAbn(r_abn)
+      updatePhone(r_phone)
+      updateStreet(r_street)
+      updateSuburb(r_suburb)
+      updateState(r_state)
+      })
+      .catch(err => {
+        console.log(err)
+      });
   }
 
   const classes = supProfileStyles();
@@ -99,25 +125,7 @@ export default function FormSupplierDetail(props) {
     })
 
   })
-
-  // const getSupplierDetail = () => {
-  //   const token = 'Token ' + window.localStorage.getItem('token')
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'Authorization': token
-  //   }
     
-  //   axios.get(`http://localhost:8000/api/supplier/current`, {
-  //       headers: headers
-  //     })
-  //     .then((res) => {
-  //       console.log(res)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     })
-  // }
-  
   return (
     <>
       <NaviBar props={props}/>
