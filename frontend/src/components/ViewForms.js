@@ -11,6 +11,7 @@ import Container from '@material-ui/core/Container';
 // React related package
 import React from 'react';
 import NaviBar from './PrimarySearchAppBar';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -33,16 +34,22 @@ export default function ViewForms(props) {
     const classes = useStyles();
     // conditions if (props.applications) use props.applications, if not use state
     const applications = props.location.state.applications
-    console.log("===========")
-    console.log(props.location.state)
-
     function showApplicationDetail(evt) {
-        console.log(evt.target.parentNode.getAttribute('value'));
-        const path = {
-            pathname: '/viewformdetail',
-            state: props.location.state,
-        }
-        props.history.push(path)
+        axios({
+            method: 'get',
+            url: `http://localhost:8000/api/supplier/application/${evt.target.parentNode.getAttribute('value')}`
+          }).then(res => {
+              console.log(res.data.application)
+              const data = props.location.state
+              data.application = res.data.application
+              const path = {
+                pathname: '/viewformdetail',
+                state: data,
+              }
+              props.history.push(path)
+          }).catch(err => {
+              console.log(err)
+          });
     }
 
     return (

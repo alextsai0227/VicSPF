@@ -30,26 +30,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function ViewForms(props) {
     const classes = useStyles();
-    const appShowId = "001"; // CHANGE THIS
-    const abo_existing_data = [
-        { recruit_role: 'Waiter', recruit_year: '1' },
-        { recruit_role: 'Accountant', recruit_year: '4' },
-    ];
-    const abo_future_data = [
-        { recruit_role: 'Chef', recruit_year: '2020' },
-        { recruit_role: 'Waitress', recruit_year: '2021' },
-    ];
-    const cohorts_data = [
-        { group_name: 'Refugee', curr_emp: 2, future_emp: 5 },
-        { group_name: 'Migrant', curr_emp: 0, future_emp: 3 },
-    ];
-    const social_benefit_data = [
-        { company_name: 'ABC company', service_name: 'some service', value: 10000 },
-    ];
-    const job_readiness_data = [
-        { group_name: 'Disengaged Youth', num_people: 12, num_hour: 50 },
-        { group_name: 'Single parents', num_people: 20, num_hour: 30 },
-    ];
+    const application = props.location.state.application
+    const abo_existing_data = application.emp_curr_abo
+    const abo_future_data = application.emp_recruit_abo
+    const cohorts_data = application.emp_cohorts
+    const social_benefit_data = application.social_benefit
+    const job_readiness_data = application.readiness_act
     function handleBack() {
         const path = {
             pathname: '/viewforms',
@@ -65,7 +51,7 @@ export default function ViewForms(props) {
         <>
             <NaviBar />
             <Container component="main" maxWidth="md">
-                <h1> Application No.{appShowId} </h1>
+                <h1> Application Details</h1>
                 <br />
                 <Typography component="h2" variant="h5" align="left">
                     Aboriginal Existing Employment
@@ -81,8 +67,8 @@ export default function ViewForms(props) {
                         <TableBody >
                             {abo_existing_data.map(row => (
                                 <TableRow >
-                                    <TableCell >{row.recruit_role}</TableCell>
-                                    <TableCell align="right" >{row.recruit_year}</TableCell>
+                                    <TableCell >{row.emp_role}</TableCell>
+                                    <TableCell align="right" >{row.emp_year}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
