@@ -55,7 +55,12 @@ export default function FormStepper(props) {
         'jobReadiness': window.VIC.jobReadiness,
         'socialBenefit': window.VIC.socialBenefit
       };
-      
+      submited, so reset variable
+      window.VIC.aboEmp = []
+      window.VIC.aboCur = []
+      window.VIC.cohortEmp = []
+      window.VIC.jobReadiness = []
+      window.VIC.socialBenefit = []
       axios({
         method: 'post',
         url: `http://localhost:8000/api/supplier/application/${window.localStorage.u_id}`,

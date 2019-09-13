@@ -152,6 +152,7 @@ router.post('/application/:id', auth.optional, (req, res, next) => {
   application.social_benefit = socialBenefits
   application.readiness_act = readinessActs
   application.emp_curr_abo = aboCurs
+  application.created_date = new Date()
 
 
   try {
