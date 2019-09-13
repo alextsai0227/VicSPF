@@ -171,8 +171,9 @@ router.post('/application/:id', auth.optional, (req, res, next) => {
 
 //GET application route by application id
 router.get('/application/:id', auth.optional, (req, res) => {
-  return Application.model.findById(req.params.id)
+  return Application.model.findOne({_id: req.params.id})
     .then((application) => {
+      console.log(application)
       if(!application) {
         return res.sendStatus(400);
       }
