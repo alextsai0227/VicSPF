@@ -7,6 +7,7 @@ import FormStepper from './components/FormStepper';
 import './App.css';
 import FormSupplierDetail from './components/FormSupplierDetail';
 import FormVerifierDetail from './components/FormVerifierDetail';
+import Home from './components/Home';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Route exact path='/viewforms' component={withRouter(ViewForms)} /> {/* delete this line */}
+            <Route exact path='/' component={withRouter(Home)} />
             <Route exact path='/signup' component={withRouter(SignUp)} />
             <Route exact path='/login' component={withRouter(LogIn)} />
             <Route exact path='/form' component={withRouter(FormStepper)} />
