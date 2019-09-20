@@ -36,10 +36,9 @@ export default function LogIn(props) {
         };
 
         if (role === 'supplier'){
-            // save supplier
+            // login supplier
             axios.post(`http://localhost:8000/api/supplier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
-                // Todo: should navigate to supplier's page
                 const { user } = res['data']
                 const data = user
                 setSupplierData(data)
@@ -48,21 +47,23 @@ export default function LogIn(props) {
                     state: data,
                 }
                 props.history.push(path)
-            }).catch(error =>{
-                alert(error);
-                // Todo: Signup faild: should give advice to user
+            }).catch(() =>{
+                alert(`wrong account or passwords`);
             })
         }else{
-            // save verifier
+            // login verifier
             axios.post(`http://localhost:8000/api/verifier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
                 // Todo: should navigate to verifier's page
                 const { user } = res['data']
                 const data = JSON.stringify(user);
-                const path = `/ver-profile/${data}`;
+                const path = {
+                    pathname: `/ver-profile`,
+                    state: data,
+                }
                 props.history.push(path)
-            }).catch(err =>{
-                alert(`No account found`);
+            }).catch(() =>{
+                alert(`wrong account or passwords`);
                 // Todo: Signup faild: should give advice to user
             })
         }
