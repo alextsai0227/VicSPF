@@ -16,6 +16,8 @@ import FormComplete from './FormComplete';
 import NaviBar from './PrimarySearchAppBar';
 import React from 'react';
 import axios from 'axios';
+import { getApplications } from '../Helper';
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -92,11 +94,7 @@ export default function FormStepper(props) {
         });
     }
     if (activeStep === 5) {
-      const path = {
-        pathname: '/viewforms',
-        state: props.location.state,
-      }
-      props.history.push(path)
+      getApplications(props)
     }
   }
 

@@ -7,7 +7,7 @@ const applicationSchema = new mongoose.Schema({
 	emp_cohorts: [],
 	social_benefit: [],
 	readiness_act: [],
-	status: {type: String, default: 'notprogress'},
+	status: {type: String, default: 'Unverified'},
 	created_date: Date
 });
 

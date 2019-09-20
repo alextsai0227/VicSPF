@@ -18,6 +18,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 // React related package
 import React from 'react';
 import NaviBar from './PrimarySearchAppBar';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -37,11 +38,31 @@ export default function ViewFormDetail(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const application = props.location.state.application
+    const application_id = application._id
     const abo_existing_data = application.emp_curr_abo
     const abo_future_data = application.emp_recruit_abo
     const cohorts_data = application.emp_cohorts
     const social_benefit_data = application.social_benefit
     const job_readiness_data = application.readiness_act
+    
+    function handleDelete() {
+        axios({
+            method: 'delete',
+            url: `http://localhost:8000/api/supplier/application/${application_id}`
+          }).then(res => {
+              const data = props.location.state
+              let applications = props.location.state.applications
+              data.applications = applications.filter(application => application_id !== application._id)
+              const path = {
+                pathname: '/viewforms',
+                state: data,
+              }
+              props.history.push(path)
+          }).catch(err => {
+              console.log(err)
+          });
+    }
+
     function handleBack() {
         const path = {
             pathname: '/viewforms',
@@ -189,7 +210,7 @@ export default function ViewFormDetail(props) {
                         <DialogContentText id="alert-dialog-description">Are you sure you want to withdraw this application?</DialogContentText>
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={closeDialog} color="primary">Withdraw</Button>
+                        <Button onClick={handleDelete} color="primary">Withdraw</Button>
                         <Button onClick={closeDialog} color="primary" autoFocus>Cancel</Button>
                     </DialogActions>
                 </Dialog>

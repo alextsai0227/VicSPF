@@ -35,29 +35,16 @@ export default function SignUp(props) {
             email: email,
             password: password
         };
+        // save supplier
+        axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
+            saveToken(res['data']['user'])
+            // Todo: should navigate to supplier's page
+            props.history.push("/sup-profile")
+        }).catch(err =>{
+            // Todo: Signup faild: should give advice to user
+            console.log(err)
+        })
 
-        if (role === 'supplier'){
-            // save supplier
-            axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
-                saveToken(res['data'][user])
-                // Todo: should navigate to supplier's page
-                props.history.push("/sup-profile")
-            }).catch(err =>{
-                // Todo: Signup faild: should give advice to user
-                console.log(err)
-            })
-        }else{
-            console.log("in verifier")
-            // save verifier
-            axios.post(`http://localhost:8000/api/verifier`, { user }).then(res => {
-                saveToken(res['data'][user])
-                // Todo: should navigate to verifier's page
-                props.history.push("/ver-profile")
-            }).catch(err =>{
-                // Todo: Signup faild: should give advice to user
-                console.log(err)
-            })
-        }
     }
 
     return (
@@ -89,24 +76,6 @@ export default function SignUp(props) {
                         />
                         </Grid> 
                         <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            type="text"
-                            variant="outlined"
-                            select
-                            id="role"
-                            label="Role"
-                            name="role"
-                            value={role}
-                            onChange={updateRole}
-                            >
-                            {roles.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                            </MenuItem>
-                            ))}
-                        </TextField>
                         </Grid>
                         <Grid item xs={12}>
                         <TextField
@@ -121,12 +90,12 @@ export default function SignUp(props) {
                             onChange={updatePassword}
                         />
                         </Grid>        
-                        <Grid item xs={12}>
+                        {/*<Grid item xs={12}>
                         <FormControlLabel
                             control={<Checkbox value="agreePolicy" color="primary" />}
                             label="By signing up, you agree to SPF's Term of Use and Privacy Policy."
                         />
-                        </Grid>
+                        </Grid>*/}
                     </Grid>
                     <Button
                         type="submit"

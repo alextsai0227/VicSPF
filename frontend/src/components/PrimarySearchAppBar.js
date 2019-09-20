@@ -14,7 +14,7 @@ import ExitToApp from '@material-ui/icons/ExitToApp';
 // React related package
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import axios from 'axios'
+import { getApplications } from '../Helper'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -47,23 +47,7 @@ function PrimarySearchAppBar(props) {
   }
 
   function handleViewForm(evt){
-    axios({
-      method: 'get',
-      url: `http://localhost:8000/api/supplier/applications/${window.localStorage.u_id}`
-    }).then(res => {
-        const data = props.location.state
-        data.applications = res.data.applications
-        const path = {
-          pathname: '/viewforms',
-          state: data,
-        }
-        props.history.push(path)
-    }).catch(err => {
-        console.log(err)
-    });
-    
-
-
+    getApplications(props)
   }
 
   return (
