@@ -2,6 +2,8 @@ import React from 'react';
 import { BrowserRouter, Route, Switch, withRouter } from "react-router-dom";
 import ViewForms from './components/ViewForms';
 import ViewFormDetail from './components/ViewFormDetail';
+import ViewFormsVerifier from './components/ViewFormsVerifier';
+import ViewFormDetailVerifier from './components/ViewFormDetailVerifier';
 import SignUp from './components/SignUp';
 import LogIn from './components/LogIn';
 import FormStepper from './components/FormStepper';
@@ -17,7 +19,9 @@ function App() {
         <Switch>
           <Route exact path='/' component={withRouter(Home)} />
           <Route exact path='/viewforms' component={withRouter(ViewForms)} />
+          <Route exact path='/viewformsverifier' component={withRouter(ViewFormsVerifier)} />
           <Route exact path='/viewformdetail' component={withRouter(ViewFormDetail)} />
+          <Route exact path='/viewformdetailverifier' component={withRouter(ViewFormDetailVerifier)} />
           <Route exact path='/signup' component={withRouter(SignUp)} />
           <Route exact path='/login' component={withRouter(LogIn)} />
           <Route exact path='/form' component={withRouter(FormStepper)} />

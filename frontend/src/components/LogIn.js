@@ -8,24 +8,29 @@ import MenuItem from '@material-ui/core/MenuItem';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {signUpStyles} from './Style'
-import { saveToken, setSupplierData } from '../Helper'
+
+// React Bootstrap
+import Alert from 'react-bootstrap/Alert'
 
 // React related package
 import React from 'react';
+import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { useInputState } from './Hooks';
+import { signUpStyles } from './Style'
+import { saveToken, setSupplierData } from '../Helper'
 import axios from 'axios';
 
 export default function LogIn(props) {
-    const classes = signUpStyles();  
+    const classes = signUpStyles();
+    const [loginFailed, setLoginFailed] = useState(false);
     const [email, updateEmail] = useInputState('');
     const [role, updateRole] = useInputState('');
     const [password, updatePassword] = useInputState('');
-    
+
     const roles = [
-        { value: 'supplier', label: 'Supplier'},
-        { value: 'verifier', label: 'Verifier'}
+        { value: 'supplier', label: 'Supplier' },
+        { value: 'verifier', label: 'Verifier' }
     ];
 
     const handleSubmit = (evt) => {
@@ -35,11 +40,10 @@ export default function LogIn(props) {
             password: password
         };
 
-        if (role === 'supplier'){
+        if (role === 'supplier') {
             // save supplier
             axios.post(`http://localhost:8000/api/supplier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
-                // Todo: should navigate to supplier's page
                 const { user } = res['data']
                 const data = user
                 setSupplierData(data)
@@ -48,22 +52,20 @@ export default function LogIn(props) {
                     state: data,
                 }
                 props.history.push(path)
-            }).catch(error =>{
-                alert(error);
-                // Todo: Signup faild: should give advice to user
+            }).catch(error => {
+                setLoginFailed(true);
             })
-        }else{
+        } else {
             // save verifier
             axios.post(`http://localhost:8000/api/verifier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
-                // Todo: should navigate to verifier's page
                 const { user } = res['data']
                 const data = JSON.stringify(user);
                 const path = `/ver-profile/${data}`;
                 props.history.push(path)
-            }).catch(err =>{
+            }).catch(err => {
                 alert(`No account found`);
-                // Todo: Signup faild: should give advice to user
+                setLoginFailed(true);
             })
         }
     }
@@ -71,7 +73,7 @@ export default function LogIn(props) {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-            
+
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -80,52 +82,55 @@ export default function LogIn(props) {
                     Log In
                 </Typography>
 
+                {loginFailed &&
+                    <Alert variant="danger" className={classes.succBar}>Incorrect email address or password. </Alert>
+                }
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            value={email}
-                            onChange={updateEmail}
-                        />
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                type="text"
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                value={email}
+                                onChange={updateEmail}
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            type="text"
-                            variant="outlined"
-                            select
-                            id="role"
-                            label="Role"
-                            name="role"
-                            value={role}
-                            onChange={updateRole}
+                            <TextField
+                                required
+                                fullWidth
+                                type="text"
+                                variant="outlined"
+                                select
+                                id="role"
+                                label="Role"
+                                name="role"
+                                value={role}
+                                onChange={updateRole}
                             >
-                            {roles.map(option => (
-                            <MenuItem key={option.value} value={option.value}>
-                            {option.label}
-                            </MenuItem>
-                            ))}
-                        </TextField>
+                                {roles.map(option => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
                         </Grid>
                         <Grid item xs={12}>
-                        <TextField
-                            fullWidth
-                            variant="outlined"
-                            type="password"
-                            id="password"
-                            label="Password"
-                            name="password"
-                            value={password}
-                            onChange={updatePassword}
-                        />
-                        </Grid>        
+                            <TextField
+                                fullWidth
+                                variant="outlined"
+                                type="password"
+                                id="password"
+                                label="Password"
+                                name="password"
+                                value={password}
+                                onChange={updatePassword}
+                            />
+                        </Grid>
                     </Grid>
                     <Button
                         type="submit"
@@ -138,8 +143,8 @@ export default function LogIn(props) {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                        <Link to='/signup' variant="body2">
-                            Don't have an account? Sign up
+                            <Link to='/signup' variant="body2">
+                                Don't have an account? Sign up
                         </Link>
                         </Grid>
                     </Grid>

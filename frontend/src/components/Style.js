@@ -23,6 +23,10 @@ export const signUpStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  succBar:{
+    width: '100%', 
+    marginTop: theme.spacing(3),
+  }
 }));
 
 export const supProfileStyles = makeStyles(theme => ({
