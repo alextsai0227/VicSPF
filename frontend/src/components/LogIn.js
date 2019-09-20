@@ -13,12 +13,11 @@ import Container from '@material-ui/core/Container';
 import Alert from 'react-bootstrap/Alert'
 
 // React related package
-import React from 'react';
-import { useState } from "react";
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useInputState } from './Hooks';
 import { signUpStyles } from './Style'
-import { saveToken, setSupplierData, setVerifierData  } from '../Helper'
+import { saveToken, setSupplierData, setVerifierData } from '../Helper'
 import axios from 'axios';
 
 export default function LogIn(props) {
@@ -40,7 +39,7 @@ export default function LogIn(props) {
             password: password
         };
 
-        if (role === 'supplier'){
+        if (role === 'supplier') {
             // login supplier
             axios.post(`http://localhost:8000/api/supplier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
@@ -52,10 +51,10 @@ export default function LogIn(props) {
                     state: data,
                 }
                 props.history.push(path)
-            }).catch(() =>{
+            }).catch(() => {
                 setLoginFailed(true);
             })
-        }else{
+        } else {
             // login verifier
             axios.post(`http://localhost:8000/api/verifier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
@@ -67,7 +66,7 @@ export default function LogIn(props) {
                     state: data,
                 }
                 props.history.push(path)
-            }).catch(() =>{
+            }).catch(() => {
                 setLoginFailed(true);
             })
         }

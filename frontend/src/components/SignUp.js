@@ -10,17 +10,21 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {signUpStyles} from './Style'
+import { signUpStyles } from './Style'
+
+// React Bootstrap
+import Alert from 'react-bootstrap/Alert'
 
 // React related package
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useInputState } from './Hooks';
-import { saveToken } from '../Helper';
+import { saveToken, setSupplierData } from '../Helper';
 import axios from 'axios';
 
 export default function SignUp(props) {
-    const classes = signUpStyles();  
+    const classes = signUpStyles();
+    const [signUpFailed, setSignUpFailed] = useState(false);
     const [email, updateEmail] = useInputState('');
     // const [role, updateRole] = useInputState('');
     const [password, updatePassword] = useInputState('');
@@ -35,13 +39,18 @@ export default function SignUp(props) {
             email: email,
             password: password
         };
-        // save supplier
         axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
             saveToken(res['data']['user'])
-            props.history.push("/sup-profile")
-        }).catch(err =>{
-            // Todo: Signup faild: should give advice to user
-            console.log(err)
+            const { user } = res['data'];
+            const data = user;
+            setSupplierData(data);
+            const path = {
+                pathname: '/sup-profile',
+                state: data,
+            }
+            props.history.push(path)
+        }).catch(err => {
+            setSignUpFailed(false);
         })
     }
 
@@ -49,7 +58,7 @@ export default function SignUp(props) {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-            
+
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
@@ -58,36 +67,39 @@ export default function SignUp(props) {
                     Sign up
                 </Typography>
 
+                {signUpFailed &&
+                    <Alert variant="danger" className={classes.succBar}>Invalid email address or password. </Alert>
+                }
                 <form className={classes.form} noValidate onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            variant="outlined"
-                            type="text"
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            value={email}
-                            onChange={updateEmail}
-                        />
-                        </Grid> 
+                            <TextField
+                                required
+                                fullWidth
+                                variant="outlined"
+                                type="text"
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                value={email}
+                                onChange={updateEmail}
+                            />
+                        </Grid>
                         <Grid item xs={12}>
                         </Grid>
                         <Grid item xs={12}>
-                        <TextField
-                            required
-                            fullWidth
-                            variant="outlined"
-                            type="password"
-                            id="password"
-                            label="Password"
-                            name="password"
-                            value={password}
-                            onChange={updatePassword}
-                        />
-                        </Grid>        
+                            <TextField
+                                required
+                                fullWidth
+                                variant="outlined"
+                                type="password"
+                                id="password"
+                                label="Password"
+                                name="password"
+                                value={password}
+                                onChange={updatePassword}
+                            />
+                        </Grid>
                         {/*<Grid item xs={12}>
                         <FormControlLabel
                             control={<Checkbox value="agreePolicy" color="primary" />}
@@ -106,8 +118,8 @@ export default function SignUp(props) {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                        <Link to="/login" variant="body2">
-                            Already have an account? Log In
+                            <Link to="/login" variant="body2">
+                                Already have an account? Log In
                         </Link>
                         </Grid>
                     </Grid>
