@@ -18,7 +18,7 @@ import { useState } from "react";
 import { Link } from 'react-router-dom';
 import { useInputState } from './Hooks';
 import { signUpStyles } from './Style'
-import { saveToken, setSupplierData } from '../Helper'
+import { saveToken, setSupplierData, setVerifierData  } from '../Helper'
 import axios from 'axios';
 
 export default function LogIn(props) {
@@ -60,7 +60,8 @@ export default function LogIn(props) {
             axios.post(`http://localhost:8000/api/verifier/login`, { user }).then(res => {
                 saveToken(res['data']['user'])
                 const { user } = res['data']
-                const data = JSON.stringify(user);
+                const data = user;
+                setVerifierData(data)
                 const path = {
                     pathname: `/ver-profile`,
                     state: data,

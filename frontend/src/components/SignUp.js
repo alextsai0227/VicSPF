@@ -3,9 +3,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import Checkbox from '@material-ui/core/Checkbox';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -22,12 +22,12 @@ import axios from 'axios';
 export default function SignUp(props) {
     const classes = signUpStyles();  
     const [email, updateEmail] = useInputState('');
-    const [role, updateRole] = useInputState('');
+    // const [role, updateRole] = useInputState('');
     const [password, updatePassword] = useInputState('');
-    const roles = [
-        { value: 'supplier', label: 'Supplier'},
-        { value: 'verifier', label: 'Verifier'}
-    ];
+    // const roles = [
+    //     { value: 'supplier', label: 'Supplier'},
+    //     { value: 'verifier', label: 'Verifier'}
+    // ];
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -38,13 +38,11 @@ export default function SignUp(props) {
         // save supplier
         axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
             saveToken(res['data']['user'])
-            // Todo: should navigate to supplier's page
             props.history.push("/sup-profile")
         }).catch(err =>{
             // Todo: Signup faild: should give advice to user
             console.log(err)
         })
-
     }
 
     return (

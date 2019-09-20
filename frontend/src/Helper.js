@@ -15,6 +15,16 @@ export const setSupplierData = (data) => {
     window.localStorage.u_id = data._id
 };
 
+export const setVerifierData = (data) => {
+    
+    data = data
+    window.VIC.data = data
+    window.VIC.company_name = data.company_name
+    window.VIC.activity_type = data.activity_type
+    window.VIC.abn = data.abn
+    window.localStorage.u_id = data._id
+};
+
 export const getApplications = (props) => {
     axios({
         method: 'get',
