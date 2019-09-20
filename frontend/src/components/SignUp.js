@@ -50,7 +50,7 @@ export default function SignUp(props) {
             }
             props.history.push(path)
         }).catch(err => {
-            setSignUpFailed(false);
+            setSignUpFailed(true);
         })
     }
 
