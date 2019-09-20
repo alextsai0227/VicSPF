@@ -46,7 +46,7 @@ export default function ViewFormDetailVerifier(props) {
 
     function handleBack() {
         const path = {
-            pathname: '/viewforms',
+            pathname: '/viewformsverifier',
             state: props.location.state,
         }
         props.history.push(path)

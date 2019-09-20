@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import Button from '@material-ui/core/Button';
-import NaviBar from './PrimarySearchAppBar';
+import NaviBar from './AppBarVerifier';
 
 function handleUpdate() {
   // Todo: save the data into database.
@@ -20,7 +20,7 @@ class FormVerifierDetail extends Component {
                 <h1>Verifier Details</h1>
                 <TextField
                     hintText="Enter Your Company Name"
-                    floatingLabelText="Supplier Name"
+                    floatingLabelText="Verifier Name"
                     // onChange={handleChange('supplierName')}
                     // defaultValue={values.supplierName}
                 />

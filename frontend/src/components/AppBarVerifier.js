@@ -1,11 +1,9 @@
-
 // Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import NoteAddOutlinedIcon from '@material-ui/icons/NoteAddOutlined';
 import FindInPageOutlinedIcon from '@material-ui/icons/FindInPageOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -25,17 +23,9 @@ const useStyles = makeStyles(theme => ({
 function AppBarVerifier(props) {
   const classes = useStyles();
 
-  function handleAddForm() {
-    const path = {
-      pathname: '/form',
-      state: props.location.state,
-    }
-    props.history.push(path)
-  }
-
   function handleViewProfile() {
     const path = {
-      pathname: '/sup-profile',     // Might be ver-profile !
+      pathname: '/ver-profile',    
       state: props.location.state,
     }
     props.history.push(path)
@@ -49,12 +39,13 @@ function AppBarVerifier(props) {
   function handleViewForm(evt){
     axios({
       method: 'get',
-      url: `http://localhost:8000/api/supplier/applications/${window.localStorage.u_id}`
+      url: `http://localhost:8000/api/verifier/applications`
     }).then(res => {
-        const data = props.location.state
+        console.log(res)
+        const data = {}
         data.applications = res.data.applications
         const path = {
-          pathname: '/viewforms',
+          pathname: '/viewformsverifier',
           state: data,
         }
         props.history.push(path)
@@ -74,15 +65,8 @@ function AppBarVerifier(props) {
           <Typography className={classes.title} variant="h6" noWrap>VicSPF</Typography>
           <div className={classes.grow} />
 
-          {/* add form button */}
-          <Tooltip title="Submit New Form">
-            <IconButton color="inherit" onClick={handleAddForm}>
-              <NoteAddOutlinedIcon />
-            </IconButton>
-          </Tooltip>
-
-          {/* view sent form button */}
-          <Tooltip title="View Sent Forms">
+          {/* view all applications to be verified */}
+          <Tooltip title="Verify Forms">
             <IconButton color="inherit" onClick={handleViewForm}>
               <FindInPageOutlinedIcon />
             </IconButton>

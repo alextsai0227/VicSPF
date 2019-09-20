@@ -33,17 +33,18 @@ const rows = [
 export default function ViewFormsVerifier(props) {
     const classes = useStyles();
     // conditions if (props.applications) use props.applications, if not use state
+    console.log(props.location.state)
     const applications = props.location.state.applications
     function showApplicationDetail(evt) {
         axios({
             method: 'get',
             url: `http://localhost:8000/api/supplier/application/${evt.target.parentNode.getAttribute('value')}`
           }).then(res => {
-              console.log(res.data.application)
-              const data = props.location.state
+              const data = {}
               data.application = res.data.application
+              data.applications = applications
               const path = {
-                pathname: '/viewformdetail',
+                pathname: '/viewformdetailverifier',
                 state: data,
               }
               props.history.push(path)

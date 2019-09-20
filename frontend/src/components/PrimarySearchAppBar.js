@@ -35,7 +35,7 @@ function PrimarySearchAppBar(props) {
 
   function handleViewProfile() {
     const path = {
-      pathname: '/sup-profile',     // Might be ver-profile !
+      pathname: '/sup-profile', 
       state: props.location.state,
     }
     props.history.push(path)

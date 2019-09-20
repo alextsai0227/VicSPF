@@ -3,6 +3,8 @@ const passport = require('passport');
 const router = require('express').Router();
 const auth = require('../auth');
 const Verifier = require('../../models/verifier');
+const Application = require('../../models/application');
+
 
 //POST new user route (optional, everyone has access)
 router.post('/', auth.optional, (req, res, next) => {
@@ -88,5 +90,20 @@ router.get('/current', auth.required, (req, res, next) => {
       return res.json({ user: user.getData() });
     });
 });
+
+//GET all applications route 
+router.get('/applications', auth.optional, (req, res) => {
+  
+  return Application.model.find()
+    .then((applications) => {
+      if(!applications) {
+        return res.sendStatus(400);
+      }
+      console.log(applications)
+      return res.json({ applications: applications});
+    });
+  
+});
+
 
 module.exports = router;
