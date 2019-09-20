@@ -37,7 +37,7 @@ export default function SignUp(props) {
         };
         // save supplier
         axios.post(`http://localhost:8000/api/supplier`, { user }).then(res => {
-            saveToken(res['data'][user])
+            saveToken(res['data']['user'])
             // Todo: should navigate to supplier's page
             props.history.push("/sup-profile")
         }).catch(err =>{
