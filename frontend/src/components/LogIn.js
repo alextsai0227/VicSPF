@@ -53,8 +53,7 @@ export default function LogIn(props) {
                 }
                 props.history.push(path)
             }).catch(() =>{
-                // setLoginFailed(true);
-                alert(`wrong account or passwords`);
+                setLoginFailed(true);
             })
         }else{
             // login verifier
@@ -68,7 +67,7 @@ export default function LogIn(props) {
                 }
                 props.history.push(path)
             }).catch(() =>{
-                alert(`wrong account or passwords`);
+                setLoginFailed(true);
             })
         }
     }
