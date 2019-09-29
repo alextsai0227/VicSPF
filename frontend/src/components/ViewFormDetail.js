@@ -8,30 +8,81 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 // React related package
 import React from 'react';
+import NaviBar from './PrimarySearchAppBar';
+import axios from 'axios';
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    // width: '100%',
-    // marginTop: theme.spacing(3),
-    // overflowX: 'auto',
-  },
+    root: {
+        width: '100%',
+        marginTop: theme.spacing(3),
+        overflowX: 'auto',
+    },
+    table: {
+        minWidth: 650,
+    },
+    button: {
+        marginLeft: '50px',
+    },
 }));
 
-export default function FormPreview(props) {
-  const classes = useStyles();
-  const abo_existing_data = window.VIC.aboCur
-  const abo_future_data = window.VIC.aboEmp
-  const cohorts_data = window.VIC.cohortEmp
-  const social_benefit_data = window.VIC.socialBenefit
-  const job_readiness_data = window.VIC.jobReadiness
+export default function ViewFormDetail(props) {
+    const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const application = props.location.state.application
+    const application_id = application._id
+    const abo_existing_data = application.emp_curr_abo
+    const abo_future_data = application.emp_recruit_abo
+    const cohorts_data = application.emp_cohorts
+    const social_benefit_data = application.social_benefit
+    const job_readiness_data = application.readiness_act
+    
+    function handleDelete() {
+        axios({
+            method: 'delete',
+            url: `http://localhost:8000/api/supplier/application/${application_id}`
+          }).then(res => {
+              const data = props.location.state
+              let applications = props.location.state.applications
+              data.applications = applications.filter(application => application_id !== application._id)
+              const path = {
+                pathname: '/viewforms',
+                state: data,
+              }
+              props.history.push(path)
+          }).catch(err => {
+              console.log(err)
+          });
+    }
 
-  return (
-    <div className={classes.root}>
-      <h1>Preview</h1>
-      <Container component="main" maxWidth="lg">
+    function handleBack() {
+        const path = {
+            pathname: '/viewforms',
+            state: props.location.state,
+        }
+        props.history.push(path)
+    }
+    function showDialog() {
+        setOpen(true);
+    }
+    function closeDialog() {
+        setOpen(false);
+    }
+
+    return (
+        <>
+            <NaviBar />
+            <Container component="main" maxWidth="md">
+                <br />
+                <h1> Application Details</h1>
                 <br />
                 <Typography component="h2" variant="h5" align="left">
                     Aboriginal Existing Employment
@@ -149,10 +200,21 @@ export default function FormPreview(props) {
                     </Table>
                 </Paper>
                 <br /><br />
+                <div>
+                    <Button onClick={handleBack} className={classes.button} >Back</Button>
+                    <Button variant="contained" color="secondary" onClick={showDialog} className={classes.button}>Withdraw</Button>
+                </div>
+                <Dialog open={open} onClose={closeDialog}>
+                    <DialogTitle id="alert-dialog-title">{"Withdraw application?"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">Are you sure you want to withdraw this application?</DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleDelete} color="primary">Withdraw</Button>
+                        <Button onClick={closeDialog} color="primary" autoFocus>Cancel</Button>
+                    </DialogActions>
+                </Dialog>
             </Container>
-    </div>
-  );
+        </>
+    );
 }
-
-
-

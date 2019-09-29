@@ -14,13 +14,8 @@ const supplierSchema = new Schema({
 	state:  String, 
     abn: String, 
     company_name: String,
-    password: String,
     application_id: {type: mongoose.Schema.Types.ObjectId, ref:'Application'}
 });
-
-// const supplierSchema = new mongoose.Schema({
-
-// });
 
 supplierSchema.methods.setPassword = function(password) {
 	this.salt = crypto.randomBytes(16).toString('hex');
@@ -49,6 +44,20 @@ supplierSchema.methods.toAuthJSON = function() {
 	  _id: this._id,
 	  email: this.email,
 	  token: this.generateJWT(),
+	};
+};
+
+supplierSchema.methods.getData = function() {
+	return {
+	  _id: this._id,
+	  email: this.email,
+	  token: this.generateJWT(),
+	  phone: this.phone,
+	  street:  this.street,
+	  suburb:  this.suburb,
+	  state:  this.state, 
+      abn: this.abn, 
+      company_name: this.company_name,
 	};
 };
 
