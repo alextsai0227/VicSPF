@@ -1,5 +1,4 @@
 const express = require('express');
-const path = require('path');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const cors = require('cors');
@@ -15,6 +14,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 //Initiate our app
 const app = express();
+const port = process.env.PORT || 8000;
 
 //Configure our app
 app.use(cors());
@@ -25,11 +25,6 @@ app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave
 
 if(!isProduction) {
   app.use(errorHandler());
-}else{
-  app.use(express.static('../frontend/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'frontend', 'build', 'index.html'))
-  })
 }
 
 //Configure Mongoose
@@ -76,4 +71,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(8000, () => console.log('Server running on http://localhost:8000/'));
+app.listen(port, () => console.log('Server running on http://localhost:8000/'));

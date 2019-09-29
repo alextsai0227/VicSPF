@@ -2610,8 +2610,6 @@
     "start": "node app.js",
     "backend": "nodemon app.js",
     "frontend": "npm start --prefix ../frontend",
-    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ../frontend && npm run build --prefix ../frontend"
-
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\""
   }
 }
